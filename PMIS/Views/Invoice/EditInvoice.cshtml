@@ -1,0 +1,120 @@
+﻿@using PMIS.DTOs
+@using BMISBLayer.Entities
+@model EditProjectDTO
+
+
+<script>
+    $(function () {
+        $("#InvoiceDate").datepicker({ altformat: "yy-mm-dd" });
+
+    });
+
+</script>
+@*<script>
+    function GetProjectId() {
+        //debugger;
+        var ProjectId = $("#ProjectId").val();
+        $.ajax({
+            url: "/Invoice/GetPaymentTermsByProjectIdEdit",
+            method: "get",
+            data: { ProjectId: ProjectId },
+            contentType: "application/json",
+            success: function (PaymentTerms) {
+                $("#PaymentTermId").empty();
+
+                for (var pp of PaymentTerms) {
+
+                    $("#PaymentTermId").append("<option selected="+"'selected'" + "value=" + pp.paymentTermId + ">" + pp.paymentTermTitle + "</option>")
+                    console.log(pp);
+                    //$("#PaymentTermId").addClass("s");
+
+                    debugger;
+                    console.log(pp.paymentTermId);
+                    $("#PaymentTermId").change(function () {
+                        var ss = $.map($("#PaymentTermId option:selected"), function (option) {
+                            debugger;
+                            console.log(option.value);
+                            return option.value;
+                        });
+                    })
+
+                }
+
+            },
+
+            error: function () { alert("sth went wrong"); },
+
+        });
+
+    }
+</script>*@
+<form action="/Invoice/UpdateInvoice" method="post" enctype="multipart/form-data">
+
+    @Html.HiddenFor(x => x.InvoiceId)
+
+    @Html.HiddenFor(x => x.ProjectId)
+
+    <div class="form-group">
+        <label> Invoice Name </label>
+        <input asp-for="InvoiceTitle" value="@Model.InvoiceTitle" />
+    </div>
+
+
+    <div class="form-group">
+        <label> Invoice Date</label>
+        <input id="InvoiceDate" name="InvoiceDate" value="@Model.InvoiceDate" />
+    </div>
+
+
+    <div class="form-group">
+        <label> Project:</label>
+
+
+        @{
+            foreach (var c in (List<Project>)ViewBag.Project)
+            {
+                if (Model.ProjectId.Equals(c.ProjectId))
+                {
+                    <div value="@c.ProjectId">@c.ProjectName</div>
+                }
+                else
+                {
+
+                }
+
+            }
+
+        }
+
+    </div>
+
+
+    <div class="form-group">
+        <label> Select PaymentTerm </label>
+        <select name="PaymentTermId" id="PaymentTermId" class="form-control" multiple>
+            @{
+                foreach (var c in Model.PaymentTerms)
+                {
+                    //foreach (var cc in (List<PaymentTerm>)ViewBag.p)
+                    //{
+
+
+                    List<PaymentTerm> bc = (List<PaymentTerm>)ViewBag.pp;
+                    if (bc.Contains(c))
+                    {
+                        <option selected="selected" value="@c.PaymentTermId">@c.PaymentTermTitle</option>
+                    }
+                    else
+                    {
+                        <option value="@c.PaymentTermId">@c.PaymentTermTitle</option>
+                    }
+
+
+
+
+                }
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

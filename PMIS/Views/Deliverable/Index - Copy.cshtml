@@ -1,0 +1,71 @@
+﻿@using BMISBLayer.Entities
+@model Deliverable
+
+    <a class="btn btn-primary" href="/Deliverable/NewDeliverable">Create New Deliverable</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Deliverable Name
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Start Date
+            </th>
+            <th>
+                End Date
+            </th>
+            <th>
+                Project phase
+            </th>
+            <th>
+                Payment Terms
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var p in (List<Deliverable>)ViewBag.Deliverables)
+        {
+            @foreach (var pp in (List<ProjectPhase>)ViewBag.ProjectPhase)
+            {
+
+
+                if (@p.ProjectPhaseId == @pp.ProjectPhaseId)
+                {
+                <tr>
+                    <td>
+                        @p.DeliverableName
+                    </td>
+                    <td>
+                        @p.DeliverableDescription
+                    </td>
+                    <td>
+                        @p.StartDate
+                    </td>
+                    <td>
+                        @p.EndDate
+                    </td>
+
+                    <td>
+                        @p.ProjectPhase.Phase.PhaseName
+                    </td>
+                    <td>
+                        <a href="/PaymentTerm/Index?DeliverableId=@p.DeliverableId">Payment Term</a>
+                    </td>
+                    <td>
+                        <a href="/Deliverable/EditDeliverable?DeliverableId=@p.DeliverableId">Edit</a>
+                    </td>
+                    <td>
+                        <a href="/Deliverable/DeleteDeliverable?DeliverableId=@p.DeliverableId">Delete</a>
+                    </td>
+                </tr>
+                    }
+                }
+
+            }
+    </tbody>
+
+</table>

@@ -1,0 +1,51 @@
+﻿@using PMIS.DTOs
+@using BMISBLayer.Entities
+@model PaymentTerm
+
+
+<script>
+        $(function () {
+            $("#PaymentTermDate").datepicker({ altformat: "yy-mm-dd" });
+           
+        });
+
+</script>
+
+
+<form action="/PaymentTerm/InsertPaymentTerm" method="post" enctype="multipart/form-data">
+   
+    <div class="form-group">
+        <label> Payment Term Name</label>
+        <input asp-for="PaymentTermTitle" />
+    </div>
+
+    <div class="form-group">
+        <label> Payment Term Amount </label>
+        <input asp-for="PaymentTermAmount" />
+    </div>
+
+    <div class="form-group">
+        <label> Payment Term Date</label>
+        <input id="PaymentTermDate" name="PaymentTermDate" />
+    </div>
+
+
+
+    @*<div class="form-group">
+        <label> Select Deliverable </label>
+        <select name="DeliverableId" class="form-control">
+            @{
+                foreach (var pp in (List<Deliverable>)ViewBag.Deliverables)
+                {
+                    <option value="@pp.DeliverableId">@pp.DeliverableName</option>
+
+
+                }
+            }
+        </select>
+    </div>*@
+
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+</form>

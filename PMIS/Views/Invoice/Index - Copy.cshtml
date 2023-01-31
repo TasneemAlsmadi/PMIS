@@ -1,0 +1,110 @@
+﻿
+@using BMISBLayer.Entities
+@model Invoice
+
+@*@{
+        ViewBag.Title = "Index";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    @TempData["total1"]*@
+
+
+@*@{decimal y = 0;
+    foreach (var pp in p.InvoicePaymentTerms)
+    {
+
+        y = y + @pp.PaymentTerm.PaymentTermAmount;
+
+    }
+        }*@
+@*@{
+        var name = "";
+
+        if (TempData.ContainsKey("total"))
+        {
+            name = TempData["total"] as string;
+        }
+
+    }
+
+    <h2>   @name</h2>*@
+    @*<script>
+    $(function Gettotal() {
+        debugger;
+        $.ajax({
+            url: "/Invoice/GetTotal",
+            method: "get",
+            contentType: "application/json",
+            success: function (t) {
+                $("#tot").append("<h2>" + t + "</h2>")
+                debugger;
+                console.log(t)
+                debugger;
+            },
+            error: function () { alert("sth went wrong"); },
+        });
+    })
+    </script>*@
+
+<a class="btn btn-primary" href="/Invoice/NewInvoice">Create New Invoice</a>
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+
+            <th>
+                Invoice ID
+            </th>
+            <th>
+                Invoice Name
+            </th>
+            <th>
+                Invoice Date
+            </th>
+            <th>
+                Project Name
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var p in (List<Invoice>)ViewBag.Invoice)
+        {
+            <tr>
+
+                <td >
+
+                    @p.InvoiceId
+
+                </td>
+                <td>
+                    @p.InvoiceTitle
+                </td>
+                <td>
+                    @p.InvoiceDate
+                </td>
+
+                <td>
+                    @p.Project.ProjectName
+                </td>
+               
+
+                <td>
+                    <a href="/Invoice/Index1?InvoiceId=@p.InvoiceId">View Invoice</a>
+                </td>
+                <td>
+                    <a href="/Invoice/EditInvoice?InvoiceId=@p.InvoiceId">Edit</a>
+                </td>
+                <td>
+                    <a href="/Invoice/DeleteInvoice?InvoiceId=@p.InvoiceId">Delete</a>
+                </td>
+
+            </tr>
+
+        }
+    </tbody>
+
+</table>

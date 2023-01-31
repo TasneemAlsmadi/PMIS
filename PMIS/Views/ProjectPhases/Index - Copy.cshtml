@@ -1,0 +1,64 @@
+﻿@using BMISBLayer.Entities
+@model ProjectPhase
+
+<a class="btn btn-primary" href="/ProjectPhases/NewProjectPhases">Create New Project Phase</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Project Name
+            </th>
+            <th>
+                Project Phase
+            </th>
+            <th>
+                Start Date
+            </th>
+            <th>
+                End Date
+            </th>
+            <th>
+                Deliverables
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var p in (List<ProjectPhase>)ViewBag.projectphases)
+        { 
+            Project pp = (Project)ViewBag.Project;
+                
+                    if (@p.ProjectId == @pp.ProjectId)
+                    {
+                        <tr>
+                           <td> @pp.ProjectName
+
+
+                            </td>
+                            <td>
+                                @p.ProjectPhaseId
+                            </td>
+                            <td>
+                                @p.StartDate
+                            </td>
+                            <td>
+                                @p.EndDate
+                            </td>
+
+                            <td>
+                                <a href="/Deliverable/Index?ProjectId=@p.ProjectId">Deliverables</a>
+                            </td>
+                            <td>
+                                <a href="/ProjectPhases/EditProjectPhase?ProjectPhaseId=@p.ProjectPhaseId">Edit</a>
+                            </td>
+                            <td>
+                                <a href="/ProjectPhases/DeleteProjectPhase?ProjectPhaseId=@p.ProjectPhaseId">Delete</a>
+                            </td>
+                        </tr>
+                    
+                }
+            
+        }
+    </tbody>
+
+</table>

@@ -1,0 +1,51 @@
+﻿@using BMISBLayer.Entities
+@model Deliverable
+<script>
+    $(function () {
+        $("#StartDate").datepicker({ altformat: "yy-mm-dd" });
+        $("#EndDate").datepicker({ altformat: "yy-mm-dd" });
+    });
+
+</script>
+<form action="/Deliverable/UpdateDeliverable" method="post" enctype="multipart/form-data">
+
+
+    @Html.HiddenFor(x => x.DeliverableId)
+    <div class="form-group">
+        <label> Deliverable Name</label>
+        <input asp-for="DeliverableName" value="@Model.DeliverableName" />
+    </div>
+    <div class="form-group">
+        <label> Deliverable Description</label>
+        <input asp-for="DeliverableDescription" value="@Model.DeliverableDescription" />
+    </div>
+    <div class="form-group">
+        <label> Start Date</label>
+        <input id="StartDate" name="StartDate" value="@Model.StartDate" />
+    </div>
+    <div class="form-group">
+        <label> End Date</label>
+        <input id="EndDate" name="EndDate" value="@Model.StartDate" />
+    </div>
+    <div class="form-group">
+
+        <label> Select Project Phase</label>
+        <select name="ProjectPhaseId" class="form-control">
+            @{
+                foreach (var c in (List<ProjectPhase>)ViewBag.ProjectPhase)
+                {
+                    if (Model.ProjectPhaseId.Equals(c.ProjectPhaseId))
+                    {
+                        <option selected="selected" value="@c.ProjectPhaseId">@c.Phase.PhaseName</option>
+                    }
+                    else
+                    {
+                        <option value="@c.ProjectPhaseId">@c.Phase.PhaseName</option>
+                    }
+
+                }
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

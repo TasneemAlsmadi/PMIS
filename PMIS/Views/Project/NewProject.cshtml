@@ -1,0 +1,97 @@
+﻿@using PMIS.DTOs
+@using BMISBLayer.Entities
+@model InsertProjectDTO
+
+
+    <script>
+        $(function () {
+            $("#StartDate").datepicker({ altformat: "yy-mm-dd" });
+            $("#EndDate").datepicker({ altformat: "yy-mm-dd" });
+        });
+        
+    </script>
+
+
+    <form action="/Project/InsertProject" method="post" enctype="multipart/form-data">
+
+
+        <div class="form-group">
+            <label> Project Name</label>
+            <input asp-for="ProjectName" />
+        </div>
+
+        <div class="form-group">
+            <label> Contract Amount</label>
+            <input asp-for="ContractAmount" />
+        </div>
+
+        <div class="form-group">
+            <label> Start Date</label>
+            <input id="StartDate" name="StartDate" />
+        </div>
+        <div class="form-group">
+            <label> End Date</label>
+            <input id="EndDate" name="EndDate" />
+        </div>
+
+        <div class="form-group">
+            <label> Select Project Type</label>
+            <select name="ProjectTypeId" class="form-control">
+                @{
+                    foreach (var pt in (List<ProjectType>)ViewBag.ProjectType)
+                    {
+                        <option value="@pt.ProjectTypeId">@pt.ProjectTypeName</option>
+
+
+                    }
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label> Select Project Status</label>
+            <select name="ProjectStatusId" class="form-control">
+                @{
+                    foreach (var ps in (List<ProjectStatus>)ViewBag.ProjectStatus)
+                    {
+                        <option value="@ps.ProjectStatusId">@ps.Status</option>
+
+
+                    }
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label> Select Client</label>
+            <select name="ClientId" class="form-control">
+                @{
+                    foreach (var ps in (List<Client>)ViewBag.Client)
+                    {
+                        <option value="@ps.ClientId">@ps.ClientName</option>
+
+
+                    }
+                }
+            </select>
+        </div>
+        @*</div>
+        <div class="form-group">
+            <label> Select Project Phases </label>
+            <select name="ProjectPhases" multiple class="form-control" >
+                @{
+                    foreach (var pp in (List<Phase>)ViewBag.Phases)
+                    {
+                        <option value="@pp.PhaseId">@pp.PhaseName</option>
+
+
+                    }
+                }
+            </select>
+        </div>*@
+        <div class="form-group">
+            <label> Upload Contract </label>
+            <input type="file" name="ContractFile" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+
+    </form>

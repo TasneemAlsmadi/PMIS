@@ -1,0 +1,58 @@
+﻿@using BMISBLayer.Entities
+@model PaymentTerm
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Payment Term Name
+            </th>
+            <th>
+                Payment Term Amount
+            </th>
+           
+            <th>
+                Deliverable Name
+            </th>
+            <th>
+                Project Name
+            </th>
+            <th>
+                Phase
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var p in (List<PaymentTerm>)ViewBag.PaymentTerm)
+        {
+
+         
+        <tr>
+            <td>
+                @p.PaymentTermTitle
+            </td>
+            <td>
+                @p.PaymentTermAmount
+            </td>
+
+
+
+            <td>
+                @p.Deliverable.DeliverableName
+            </td>
+            <td>
+                @p.Deliverable.ProjectPhase.Project.ProjectName
+            </td>
+
+            <td>
+                @p.Deliverable.ProjectPhase.ProjectPhaseName
+            </td>
+        </tr>
+
+            
+        }
+    </tbody>
+
+</table>

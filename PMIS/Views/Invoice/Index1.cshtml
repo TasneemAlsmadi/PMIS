@@ -1,0 +1,122 @@
+﻿@using PMIS.DTOs
+@using BMISBLayer.Entities
+@model ViewDTO
+@{ var p= (ViewDTO)ViewBag.Invoice;
+
+    <link rel="stylesheet" href="~/css/Invoice.css" type="text/css" />
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <div class="container">
+        <div class="col-md-12">
+            <div class="invoice">
+                <!-- begin invoice-company -->
+                <div class="invoice-company text-inverse f-w-600">
+                    <span class="pull-right hidden-print">
+                        <a href="javascript:;" class="btn btn-sm btn-white m-b-10 p-l-5"><i class="fa fa-file t-plus-1 text-danger fa-fw fa-lg"></i> Export as PDF</a>
+                        <a href="javascript:;" onclick="window.print()" class="btn btn-sm btn-white m-b-10 p-l-5"><i class="fa fa-print t-plus-1 fa-fw fa-lg"></i> Print</a>
+                    </span>
+                    <img width="40px" height="40px" src="https://www.perfectconstruct.com/images/logo.jpg"></img>
+                    Company Name, Perfection Construction 
+                </div>
+                <!-- end invoice-company -->
+                <!-- begin invoice-header -->
+                <div class="invoice-header">
+                    <div class="invoice-from">
+                        <small>from</small>
+                        <address class="m-t-5 m-b-5">
+                            <strong class="text-inverse">Perfection Construction Company</strong>
+                            <br>
+                            City:  Amman,Jordan<br>
+                            Phone: (628)245-6757
+                        </address>
+                    </div>
+                    <div class="invoice-to">
+                        <small>to</small>
+                        <address class="m-t-5 m-b-5">
+                            <strong class="text-inverse">@p.Project.Client.ClientName</strong><br>
+                            Email: @p.Project.Client.Email<br>
+                            Phone:  @p.Project.Client.PhoneNumber
+                        </address>
+                    </div>
+                    <div class="invoice-date">
+                        <small>Invoice :@p.InvoiceTitle</small>
+                       
+                        <div class="date text-inverse m-t-5">@p.InvoiceDate</div>
+                        <small>Project : @p.Project.ProjectName</small>
+                        <div class="invoice-detail">
+
+                        </div>
+                    </div>
+                </div>
+                <!-- end invoice-header -->
+                <!-- begin invoice-content -->
+                <div class="invoice-content">
+                    <!-- begin table-responsive -->
+                    <div class="table-responsive">
+                        <table class="table table-invoice">
+                            <thead>
+                                <tr>
+                                    <th>Deliverable Names</th>
+                                    <th class="text-center" width="10%">Payment Term Names</th>
+                                   
+                                    <th class="text-right" width="20%">Payment Term Amounts</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                               
+                                @{
+                                    foreach (var v in @p.InvoicePaymentTerm)
+                                    {
+
+
+                                        <tr>
+                                            <td>
+                                                <span class="text-inverse"> @v.PaymentTerm.Deliverable.DeliverableName</span><br>
+                                                <small>@v.PaymentTerm.Deliverable.DeliverableDescription</small>
+                                            </td>
+                                            <td class="text-center">  @v.PaymentTerm.PaymentTermTitle</td>
+
+                                            <td class="text-right">@v.PaymentTerm.PaymentTermAmount</td>
+                                          
+                                        </tr>
+
+                                                            }
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- end table-responsive -->
+                    <!-- begin invoice-price -->
+                    <div class="invoice-price">
+                      
+                        <div class="invoice-price-right">
+                            <small>TOTAL</small> <span class="f-w-600">@p.Total</span>
+                        </div>
+                    </div>
+                    <!-- end invoice-price -->
+                </div>
+                <!-- end invoice-content -->
+                <!-- begin invoice-note -->
+                <div class="invoice-note">
+                    * Make all cheques payable to [@p.Project.Client.ClientName]<br>
+                    * Payment is due within 30 days<br>
+                    * If you have any questions concerning this invoice, contact  [Perfection Construction Company,(628)245-6757, perfectconstruct@gmail.com]
+                </div>
+                <!-- end invoice-note -->
+                <!-- begin invoice-footer -->
+                <div class="invoice-footer">
+                    <p class="text-center m-b-5 f-w-600">
+                        THANK YOU FOR YOUR BUSINESS
+                    </p>
+                    <p class="text-center">
+                        <span class="m-r-10"><i class="fa fa-fw fa-lg fa-globe"></i> perfectconstruct.com</span>
+                        <span class="m-r-10"><i class="fa fa-fw fa-lg fa-phone-volume"></i> (628)245-6757</span>
+                        <span class="m-r-10"><i class="fa fa-fw fa-lg fa-envelope"></i> perfectconstruct@gmail.com</span>
+                    </p>
+                </div>
+                <!-- end invoice-footer -->
+            </div>
+        </div>
+    </div>
+    }

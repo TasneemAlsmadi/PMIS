@@ -1,0 +1,43 @@
+﻿@using BMISBLayer.Entities
+@model ProjectPhase
+<script>
+    $(function () {
+        $("#StartDate").datepicker({ altformat: "yy-mm-dd" });
+        $("#EndDate").datepicker({ altformat: "yy-mm-dd" });
+    });
+
+</script>
+<form action="/ProjectPhases/UpdateProjectPhase" method="post" enctype="multipart/form-data">
+
+    @Html.HiddenFor(x => x.ProjectId)
+    @Html.HiddenFor(x => x.ProjectPhaseId)
+    <div class="form-group">
+        <label> Start Date</label>
+        <input id="StartDate" name="StartDate" value="@Model.StartDate" />
+    </div>
+    <div class="form-group">
+        <label> End Date</label>
+        <input id="EndDate" name="EndDate" value="@Model.StartDate" />
+    </div>
+    <div class="form-group">
+
+        <label> Select Project Phase</label>
+        <select name="PhaseId" class="form-control">
+            @{
+                foreach (var c in (List<Phase>)ViewBag.Phase)
+                {
+                    if (Model.PhaseId.Equals(c.PhaseId))
+                    {
+                        <option selected="selected" value="@c.PhaseId">@c.PhaseName</option>
+                    }
+                    else
+                    {
+                        <option value="@c.PhaseId">@c.PhaseName</option>
+                    }
+
+                }
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

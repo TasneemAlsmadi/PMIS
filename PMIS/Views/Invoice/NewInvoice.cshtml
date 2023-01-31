@@ -1,0 +1,122 @@
+﻿@using PMIS.DTOs
+@using BMISBLayer.Entities
+@model InsertInvoiceDTO
+
+
+<script>
+   
+    $(function () {
+        $("InvoiceDate").datepicker({ altformat: "yy-mm-dd" });
+    });
+
+</script>
+<script>
+    function GetProjectId() {
+        //debugger;
+        var ProjectId = $("#ProjectId").val();
+        $.ajax({
+            url: "/Invoice/GetPaymentTermsByProjectId",
+            method: "get",
+            data: { ProjectId: ProjectId },
+            contentType: "application/json",
+            success: function (PaymentTerms) {
+                $("#PaymentTermId").empty();
+
+                for (var pp of PaymentTerms) {
+
+                    $("#PaymentTermId").append("<option value=" + pp.paymentTermId + ">" + pp.paymentTermTitle + "</option>")
+                    console.log(pp);
+                    //$("#PaymentTermId").addClass("s");
+
+                    debugger;
+                    console.log(pp.paymentTermId);
+                    $("#PaymentTermId").change(function () {
+                        var ss = $.map($("#PaymentTermId option:selected"), function (option) {
+                            debugger;
+                            console.log(option.value);
+                            return option.value;
+                        });
+                    })
+
+                }
+
+            },
+
+            error: function () { alert("sth went wrong"); },
+
+        });
+
+    }
+</script>
+
+   @*// $(document).ready(function () {
+    
+        //    console.clear()
+        //    ss.forEach(element => {
+        //        $.ajax({
+        //            type: "Get",
+        //            url: "/Invoice/GetPaymentTerm?PaymentTermId=${element}",
+        //            method: "get",
+        //            //data: { ss: ss },
+        //            //contentType: "application/json",
+        //            success: function (response) {
+        //                debugger;
+        //                console.log(response)
+        //            },
+        //            error: function () { alert("sth2 went wrong"); }
+
+
+        //        });
+
+
+        //    });
+
+
+        //});
+
+
+  // });*@
+    
+
+
+
+
+<form action="/Invoice/InsertInvoice" method="post" enctype="multipart/form-data">
+    
+    <div class="form-group">
+        <label> Invoice Name</label>
+        <input asp-for="InvoiceTitle" />
+    </div>
+
+    <div class="form-group">
+        <label> Invoice Date </label>
+        <input asp-for="InvoiceDate" id="InvoiceDate" />
+    </div>
+
+    <div class="form-group">
+        <label> Select Project </label>
+        <select id="ProjectId" name="ProjectId" class="form-control" onchange="GetProjectId()">
+            @{
+                foreach (var pp in (List<Project>)ViewBag.Project)
+                {
+                    <option value="@pp.ProjectId">@pp.ProjectName</option>
+
+
+                }
+
+            }
+        </select>
+    </div>
+
+
+    <div class="form-group">
+        <label> Select PaymentTerm </label>
+        <select asp-for="PaymentTermId" id="PaymentTermId" class="form-control" multiple>
+           
+        </select>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+</form>

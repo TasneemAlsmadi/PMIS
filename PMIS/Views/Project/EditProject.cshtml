@@ -1,0 +1,98 @@
+﻿@using PMIS.DTOs
+@using BMISBLayer.Entities
+@model Project
+<script>
+    $(function () {
+        $("#StartDate").datepicker({ altformat: "yy-mm-dd" });
+        $("#EndDate").datepicker({ altformat: "yy-mm-dd" });
+    });
+
+</script>
+<form action="/Project/UpdateProject" method="post" enctype="multipart/form-data">
+
+    @Html.HiddenFor(x => x.ProjectId)
+    <div class="form-group">
+        <label> Project Name</label>
+        <input asp-for="ProjectName" name="ProjectName" value="@Model.ProjectName" />
+    </div>
+
+    <div class="form-group">
+        <label>Contract Amount</label>
+        <input asp-for="ContractAmount" value="@Model.ContractAmount" />
+    </div>
+    <div class="form-group">
+        <label> Start Date</label>
+        <input id="StartDate" name="StartDate" value="@Model.StartDate" />
+    </div>
+    <div class="form-group">
+        <label> End Date</label>
+        <input id="EndDate" name="EndDate" value="@Model.EndDate" />
+    </div>
+
+
+    <div class="form-group">
+
+        <label> Select Project Type</label>
+        <select name="ProjectTypeId" class="form-control">
+            @{
+                foreach (var c in (List<ProjectType>)ViewBag.ProjectType)
+                {
+                    if (Model.ProjectTypeId.Equals(c.ProjectTypeId))
+                    {
+                        <option selected="selected" value="@c.ProjectTypeId">@c.ProjectTypeName</option>
+                    }
+                    else
+                    {
+                        <option value="@c.ProjectTypeId">@c.ProjectTypeName</option>
+                    }
+
+                }
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label> Select Project Status</label>
+        <select name="ProjectStatusId" class="form-control">
+            @{
+                foreach (var ps in (List<ProjectStatus>)ViewBag.ProjectStatus)
+                {
+                    if (Model.ProjectStatusId.Equals(ps.ProjectStatusId))
+                    {
+                        <option selected="selected" value="@ps.ProjectStatusId">@ps.Status</option>
+                    }
+                    else
+                    {
+                        <option value="@ps.ProjectStatusId">@ps.Status</option>
+
+                    }
+                }
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label> Select Client</label>
+        <select name="ClientId" class="form-control">
+            @{
+                foreach (var ps in (List<Client>)ViewBag.Client)
+                {
+                    if (Model.ProjectId.Equals(ps.ClientId))
+                    {
+                        <option selected="selected" value="@ps.ClientId">@ps.ClientName</option>
+                    }
+                    else
+                    {
+                        <option value="@ps.ClientId">@ps.ClientName</option>
+
+                    }
+                }
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label value="@Model.ContractFileName"> Upload Contract </label>
+        <input type="file" name="ContractFile" />
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
