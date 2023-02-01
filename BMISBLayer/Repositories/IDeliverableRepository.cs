@@ -15,7 +15,7 @@ namespace BMISBLayer.Repositories
         void InsertDeliverable(Deliverable Deliverable);
         Project GetProject(int projectId);
         ProjectPhase GetProjectPhase(int ProjectPhaseId);
-
         List<Deliverable> GetAllDeliverables1(String s);
+ 
     }
 }

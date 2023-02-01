@@ -75,6 +75,15 @@ namespace PMIS.Controllers
                 ViewBag.Deliverable = PaymentTermRepo.GetDeliverable(DeliverableId);
                 TempData.Keep();
                 PaymentTerm.DeliverableId = DeliverableId;
+                var Deliverable = PaymentTermRepo.GetDeliverable(DeliverableId);
+                if (PaymentTerm.PaymentTermAmount > Deliverable.ProjectPhase.Project.ContractAmount)
+                {
+                    ViewBag.error = false;
+                    return View();
+                }
+
+
+
                 PaymentTermRepo.InsertPaymentTerm(PaymentTerm);
 
                 return RedirectToAction("Index", new { DeliverableId = DeliverableId });
@@ -106,6 +115,15 @@ namespace PMIS.Controllers
             {
                 int DeliverableId = (int)TempData["DeliverableId"];
                 TempData.Keep();
+
+                var Deliverable = PaymentTermRepo.GetDeliverable(DeliverableId);
+                if (PaymentTerm.PaymentTermAmount > Deliverable.ProjectPhase.Project.ContractAmount)
+                {
+                    ViewBag.error = false;
+                    return View(PaymentTerm);
+                }
+
+
                 PaymentTermRepo.EditPaymentTerm(PaymentTerm);
 
                 return RedirectToAction("Index", new { DeliverableId = DeliverableId });

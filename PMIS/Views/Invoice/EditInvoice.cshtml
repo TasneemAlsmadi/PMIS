@@ -10,44 +10,6 @@
     });
 
 </script>
-@*<script>
-    function GetProjectId() {
-        //debugger;
-        var ProjectId = $("#ProjectId").val();
-        $.ajax({
-            url: "/Invoice/GetPaymentTermsByProjectIdEdit",
-            method: "get",
-            data: { ProjectId: ProjectId },
-            contentType: "application/json",
-            success: function (PaymentTerms) {
-                $("#PaymentTermId").empty();
-
-                for (var pp of PaymentTerms) {
-
-                    $("#PaymentTermId").append("<option selected="+"'selected'" + "value=" + pp.paymentTermId + ">" + pp.paymentTermTitle + "</option>")
-                    console.log(pp);
-                    //$("#PaymentTermId").addClass("s");
-
-                    debugger;
-                    console.log(pp.paymentTermId);
-                    $("#PaymentTermId").change(function () {
-                        var ss = $.map($("#PaymentTermId option:selected"), function (option) {
-                            debugger;
-                            console.log(option.value);
-                            return option.value;
-                        });
-                    })
-
-                }
-
-            },
-
-            error: function () { alert("sth went wrong"); },
-
-        });
-
-    }
-</script>*@
 <form action="/Invoice/UpdateInvoice" method="post" enctype="multipart/form-data">
 
     @Html.HiddenFor(x => x.InvoiceId)

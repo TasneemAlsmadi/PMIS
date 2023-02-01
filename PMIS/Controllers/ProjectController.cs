@@ -30,8 +30,7 @@ namespace PMIS.Controllers
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var project = projectRepo.GetProjectManagerProjects(userId).ToList();
                 ViewBag.projects = project;
-                //ViewBag.ProjectPhases = projectRepo.GetAllProjectPhases();
-                //ViewBag.Phases = projectRepo.GetAllPhases();
+                
                 return View();
             }
             catch (Exception ex)
@@ -63,20 +62,9 @@ namespace PMIS.Controllers
             try
             {
 
-                //Project project = new Project();
+                
                 var project = mapper.Map<Project>(projectDTO);
-                //project.ProjectName = projectDTO.ProjectName;
-                //project.StartDate = projectDTO.StartDate;
-                //project.EndDate = projectDTO.StartDate;
-                //project.ContractAmount = projectDTO.ContractAmount;
-                //project.ProjectStatusId = projectDTO.ProjectStatusId;
-                //project.ProjectTypeId = projectDTO.ProjectTypeId;
-
-                //project.ProjectStatusName = projectDTO.Status;
-                //project.ProjectTypeName = projectDTO.ProjectTypeName;
-
-
-                //File
+               
                 project.ContractFileName = projectDTO.ContractFile.FileName;
                 project.ContractFileType = projectDTO.ContractFile.ContentType;
                 project.ProjectManagerId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -120,8 +108,7 @@ namespace PMIS.Controllers
                 ViewBag.projectType = projectRepo.GetAllProjectTypes();
                 ViewBag.ProjectStatus = projectRepo.GetAllProjectStatuses();
                 ViewBag.Client = projectRepo.GetAllClients();
-                //ViewBag.Phases = projectRepo.GetAllPhases();
-                //ViewBag.ProjectPhases= projectRepo.GetAllProjectPhases();
+               
 
 
                 return View(project);
@@ -151,21 +138,6 @@ namespace PMIS.Controllers
                         projectRepo.EditProject(project);
                     }
                 }
-
-
-                //project = new Project();
-                //project = projectRepo.GetProject(project.ProjectId);
-
-
-                //Project project = new Project();
-                //var project = mapper.Map<Project>(projectDTO);
-                //project.ProjectName = projectDTO.ProjectName;
-                //project.StartDate = projectDTO.StartDate;
-                //project.EndDate = projectDTO.StartDate;
-                //project.ContractAmount = projectDTO.ContractAmount;
-                //project.ProjectStatusName = projectDTO.Status;
-                //project.ProjectTypeName = projectDTO.ProjectTypeName;
-
 
                 return RedirectToAction("Index");
             }

@@ -25,12 +25,10 @@ namespace PMIS.Controllers
         {
             try
             {
-                //    TempData["projectId"] = ProjectId;
-                //    TempData.Keep();
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 ViewBag.Deliverables = DeliverableRepo.GetAllDeliverables1(userId);
                 ViewBag.Project = DeliverableRepo.GetProject(ProjectId);
-                //ViewBag.projectphase = DeliverableRepo.GetProjectPhase(ProjectPhaseId);
+              
                 return View();
             }
             catch (Exception ex) {
@@ -57,6 +55,7 @@ namespace PMIS.Controllers
         {
             try
             {
+                
                 int ProjectId = (int)TempData["projectId"];
                 TempData.Keep();
                 ViewBag.Project = DeliverableRepo.GetProject(ProjectId);
@@ -79,6 +78,22 @@ namespace PMIS.Controllers
                 int ProjectId = (int)TempData["projectId"];
                 ViewBag.Project = DeliverableRepo.GetProject(ProjectId);
                 TempData.Keep();
+                ViewBag.ProjectPhases = DeliverableRepo.GetAllProjectPhases(ProjectId);
+                TempData.Keep();
+
+
+                var i = Deliverable.ProjectPhaseId == null ? default(int) : Deliverable.ProjectPhaseId.Value;
+                var Proj = DeliverableRepo.GetProjectPhase(i);
+                if (Proj.StartDate > Deliverable.StartDate)
+                {
+                    ViewBag.error = false;
+                    return View();
+                }
+                if (Proj.EndDate < Deliverable.EndDate)
+                {
+                    ViewBag.error1 = false;
+                    return View();
+                }
                 DeliverableRepo.InsertDeliverable(Deliverable);
 
                 return RedirectToAction("Index", new { ProjectId = ProjectId });
@@ -112,6 +127,22 @@ namespace PMIS.Controllers
             {
                 int ProjectId = (int)TempData["projectId"];
                 TempData.Keep();
+                ViewBag.ProjectPhase = DeliverableRepo.GetAllProjectPhases(ProjectId);
+                TempData.Keep();
+                var i = Deliverable.ProjectPhaseId == null ? default(int) : Deliverable.ProjectPhaseId.Value;
+                var Proj = DeliverableRepo.GetProjectPhase(i);
+                if (Proj.StartDate > Deliverable.StartDate )
+                {
+                    ViewBag.error = false;
+                    return View(Deliverable);
+                }
+                if (Proj.EndDate < Deliverable.EndDate)
+                {
+                    ViewBag.error1 = false;
+                    return View(Deliverable);
+                }
+
+
                 DeliverableRepo.EditDeliverable(Deliverable);
 
                 return RedirectToAction("Index", new { ProjectId = ProjectId });

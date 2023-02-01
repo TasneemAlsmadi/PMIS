@@ -21,23 +21,22 @@ namespace BMISBLayer.Repositories
         }
         public void DeleteInvoice(int InvoiceId)
         {
-            var p = context.Invoice.SingleOrDefault(x => x.InvoiceId == InvoiceId);
+            var p = context.Invoice.Include(e=>e.InvoicePaymentTerms).SingleOrDefault(x => x.InvoiceId == InvoiceId);
             context.Remove(p);
             context.SaveChanges();
         }
         public PaymentTerm GetAPaymentTerm(int PaymentTermId) {
             return context.PaymentTerm.SingleOrDefault(x => x.PaymentTermId == PaymentTermId);
         }
-
         public void EditInvoice(Invoice p)
-        {
-            
+        {  
             context.Invoice.Update(p);
             context.SaveChanges();
         }
         public void InsertInvoicePaymentTerm(InvoicePaymentTerm InvoicePaymentTerm)
         {
             context.InvoicePaymentTerm.Add(InvoicePaymentTerm);
+            //context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.InvoicePaymentTerm ON;");
             context.SaveChanges();
         }
         public void InsertInvoice(Invoice Invoice)
@@ -49,12 +48,10 @@ namespace BMISBLayer.Repositories
         {
             return context.Project.Include(x => x.ProjectManager).Include(x=>x.ProjectPhases).SingleOrDefault(x => x.ProjectId == projectId);
         }
-      
         public String GetProjectName(int projectId)
         {
             return context.Project.SingleOrDefault(x => x.ProjectId == projectId).ProjectName;
         }
-
         public Invoice GetInvoice(int InvoiceId)
         {
             return context.Invoice.Include(o=>o.Project).Include(y=>y.Project.Client).Include(x=>x.InvoicePaymentTerms).SingleOrDefault(x => x.InvoiceId == InvoiceId);
@@ -62,12 +59,10 @@ namespace BMISBLayer.Repositories
         public List<Project> GetAllProjects(string projectManagerId)
         {
             return context.Project.Where(x => x.ProjectManagerId == projectManagerId).ToList();
-
         }
         public List<Invoice> GetAllInvoices(string projectManagerId) {
             return context.Invoice.Include(x=>x.Project).Include(x=>x.InvoicePaymentTerms).Where(x => x.Project.ProjectManagerId == projectManagerId).ToList();
         }
-        
         public List<PaymentTerm> GetAllPaymentTerms(int ProjectId)
         {
             return context.PaymentTerm.Include(x=>x.InvoicePaymentTerms).Include(y=>y.Deliverable.ProjectPhase.Project).Where(y=>y.Deliverable.ProjectPhase.ProjectId==ProjectId).ToList();
@@ -78,8 +73,6 @@ namespace BMISBLayer.Repositories
             return context.InvoicePaymentTerm.Include(z=>z.PaymentTerm).Include(b=>b.Invoice).Include(z=>z.Invoice.Project).Where(y => y.Invoice.Project.ProjectId == ProjectId ).ToList();
 
         }
-       
-
         public List<InvoicePaymentTerm> GetInvoicePaymentTerm(int InvoiceId)
         {
             return context.InvoicePaymentTerm.Include(z => z.PaymentTerm).Where(y => y.InvoiceId == InvoiceId).ToList();
@@ -89,6 +82,12 @@ namespace BMISBLayer.Repositories
         {
             return context.Deliverable.SingleOrDefault(x => x.DeliverableId == DeliverableId);
         }
+        public void DeleteInvoicePaymentTerm(int i ,int j) {
+            var p = context.InvoicePaymentTerm.Where(x => x.InvoiceId == i).ToList();
+            var pp = p.SingleOrDefault(x => x.PaymentTermId == j);
+            context.InvoicePaymentTerm.Remove(pp);
+            context.SaveChanges();
 
+        }
     }
 }

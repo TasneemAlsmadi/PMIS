@@ -1,0 +1,43 @@
+﻿
+@using BMISBLayer.Entities
+@model PaymentTerm
+
+
+<script>
+    $(function () {
+        $("#PaymentTermDate").datepicker({ altformat: "yy-mm-dd" });
+
+    });
+
+</script>
+@if (ViewBag.error == false)
+{
+<p class="text-danger">  The PaymentTerm Amount is greater than Project Amount.</p>
+
+
+}
+<form action="/PaymentTerm/UpdatePaymentTerm" method="post" enctype="multipart/form-data">
+
+    @Html.HiddenFor(x => x.DeliverableId)
+
+    @Html.HiddenFor(x => x.PaymentTermId)
+
+
+
+
+
+    <div class="form-group">
+        <label> PaymentTerm Name</label>
+        <input asp-for="PaymentTermTitle" value="@Model.PaymentTermTitle" />
+    </div>
+    <div class="form-group">
+        <label> PaymentTerm Amount</label>
+        <input asp-for="PaymentTermAmount" value="@Model.PaymentTermAmount" />
+    </div>
+    <div class="form-group">
+        <label> PaymentTerm Date</label>
+        <input id="PaymentTermDate" name="PaymentTermDate" value="@Model.PaymentTermDate" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

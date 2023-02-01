@@ -4,13 +4,23 @@
 
 
 <script>
-        $(function () {
-            $("#StartDate").datepicker({ altformat: "yy-mm-dd" });
-            $("#EndDate").datepicker({ altformat: "yy-mm-dd" });
-        });
+    $(function () {
+        $("#StartDate").datepicker({ altformat: "yy-mm-dd" });
+        $("#EndDate").datepicker({ altformat: "yy-mm-dd" });
+    });
 
 </script>
 
+@if (ViewBag.error == false)
+{
+    <p class="text-danger"> The Selected Start Date of the Deliverable is before the Project Phase Start Date.</p>
+
+}
+@if (ViewBag.error1 == false)
+{
+    <p class="text-danger"> The Selected End Date of the Deliverable is after the Project Phase End Date.</p>
+
+}
 
 <form action="/Deliverable/InsertDeliverable" method="post" enctype="multipart/form-data">
 
@@ -38,19 +48,19 @@
 
 
     <div class="form-group">
-            <label> Select Project Phases </label>
-            <select name="ProjectPhaseId" class="form-control">
-                @{
-                                <option selected="selected" disabled> Select Project Phases</option>
-                    foreach (var pp in (List<ProjectPhase>)ViewBag.ProjectPhases)
-                    {
-                        <option value="@pp.ProjectPhaseId">@pp.Phase.PhaseName</option>
+        <label> Select Project Phases </label>
+        <select name="ProjectPhaseId" class="form-control">
+            @{
+                <option selected="selected" disabled> Select Project Phases</option>
+                foreach (var pp in (List<ProjectPhase>)ViewBag.ProjectPhases)
+                {
+                    <option value="@pp.ProjectPhaseId">@pp.Phase.PhaseName</option>
 
 
-                    }
                 }
-            </select>
-        </div>
+            }
+        </select>
+    </div>
 
 
     <button type="submit" class="btn btn-primary">Submit</button>

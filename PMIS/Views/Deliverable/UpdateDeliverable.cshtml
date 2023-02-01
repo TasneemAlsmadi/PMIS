@@ -7,6 +7,16 @@
     });
 
 </script>
+@if (ViewBag.error == false)
+{
+    <p class="text-danger"> The Selected Start Date of the Deliverable is before the Project Phase Start Date.</p>
+
+}
+@if (ViewBag.error1 == false)
+{
+<p class="text-danger"> The Selected End Date of the Deliverable is after the Project Phase End Date.</p>
+
+}
 <form action="/Deliverable/UpdateDeliverable" method="post" enctype="multipart/form-data">
 
 

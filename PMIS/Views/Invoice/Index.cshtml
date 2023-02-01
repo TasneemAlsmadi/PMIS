@@ -1,50 +1,7 @@
 ﻿
 @using BMISBLayer.Entities
 @model Invoice
-@*@{
-        ViewBag.Title = "Index";
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
 
-    @TempData["total1"]*@
-
-
-@*@{decimal y = 0;
-    foreach (var pp in p.InvoicePaymentTerms)
-    {
-
-        y = y + @pp.PaymentTerm.PaymentTermAmount;
-
-    }
-        }*@
-@*@{
-        var name = "";
-
-        if (TempData.ContainsKey("total"))
-        {
-            name = TempData["total"] as string;
-        }
-
-    }
-
-    <h2>   @name</h2>*@
-@*<script>
-    $(function Gettotal() {
-        debugger;
-        $.ajax({
-            url: "/Invoice/GetTotal",
-            method: "get",
-            contentType: "application/json",
-            success: function (t) {
-                $("#tot").append("<h2>" + t + "</h2>")
-                debugger;
-                console.log(t)
-                debugger;
-            },
-            error: function () { alert("sth went wrong"); },
-        });
-    })
-    </script>*@
 
 <a class="btn btn-primary" href="/Invoice/NewInvoice">Create New Invoice</a>
 <div class="table-responsive">
@@ -52,15 +9,16 @@
         <thead>
             <tr>
                 <th>
+                    @Html.DisplayNameFor(model => model.InvoiceId)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.InvoiceTitle)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.InvoiceDate)
                 </th>
 
-                <th>
-                    @Html.DisplayNameFor(model => model.InvoiceId)
-                </th>
+
                 <th>
                     @Html.DisplayNameFor(model => model.Project)
                 </th>
@@ -74,21 +32,22 @@
                 
             <tr>
                 <td>
+                    @Html.DisplayFor(modelItem => item.InvoiceId)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.InvoiceTitle)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.InvoiceDate)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.InvoiceId)
-                </td>
+
                 <td>
                     @Html.DisplayFor(modelItem => item.Project.ProjectName)
                 </td>
 
                 <td>
                     <a class="text-success" href="/Invoice/EditInvoice?InvoiceId=@item.InvoiceId"><i class="fa-regular fa-pen-to-square"></i></a> |
-                    <a  href="/Invoice/Index1?InvoiceId=@item.InvoiceId">View Invoice</a>|
+                    <a href="/Invoice/Index1?InvoiceId=@item.InvoiceId">View Invoice</a>|
                     <a class="text-danger" href="/Invoice/DeleteInvoice?InvoiceId=@item.InvoiceId"><i class="fa-solid fa-trash"></i></a>
                 </td>
             </tr>

@@ -38,6 +38,7 @@
             <label> Select Project Type</label>
             <select name="ProjectTypeId" class="form-control">
                 @{
+                                <option selected="selected" disabled> Select Project Type</option>
                     foreach (var pt in (List<ProjectType>)ViewBag.ProjectType)
                     {
                         <option value="@pt.ProjectTypeId">@pt.ProjectTypeName</option>
@@ -51,6 +52,7 @@
             <label> Select Project Status</label>
             <select name="ProjectStatusId" class="form-control">
                 @{
+                    <option selected="selected" disabled> Select Project Status</option>
                     foreach (var ps in (List<ProjectStatus>)ViewBag.ProjectStatus)
                     {
                         <option value="@ps.ProjectStatusId">@ps.Status</option>
@@ -64,6 +66,7 @@
             <label> Select Client</label>
             <select name="ClientId" class="form-control">
                 @{
+                    <option selected="selected" disabled> Select Client</option>
                     foreach (var ps in (List<Client>)ViewBag.Client)
                     {
                         <option value="@ps.ClientId">@ps.ClientName</option>

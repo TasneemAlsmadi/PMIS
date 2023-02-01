@@ -59,8 +59,7 @@ namespace BMISBLayer.Repositories
         public List<Project> GetProjectManagerProjects(string projectManagerId)
         {
             return context.Project.Include(c=>c.Client).Include(s =>s.ProjectStatus).Include(t =>t.ProjectType).Include(ps=>ps.ProjectPhases).Where(x =>x.ProjectManagerId == projectManagerId).ToList();
-         //FromSqlRaw($"exec GetAllProjects '{projectManagerId}'").ToList();
-         //return context.Project.Where(x => x.ProjectManagerId == projectManagerId).ToList();
+        
         }
 
         public void InsertProject(Project project)
@@ -70,7 +69,7 @@ namespace BMISBLayer.Repositories
         }
         public void DeleteProject(int projectId)
         {
-            var p= context.Project.SingleOrDefault(x => x.ProjectId == projectId);
+            var p= context.Project.Include(s=>s.ProjectPhases).SingleOrDefault(x => x.ProjectId == projectId);
             context.Remove(p);
             context.SaveChanges();
         }

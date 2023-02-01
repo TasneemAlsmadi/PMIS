@@ -5,9 +5,9 @@
 @if (User.Identity.IsAuthenticated)
 {
 
-    <div>
-        <img src="~/img/Perfection-Construction-Logo-1.png" width="100%" width="400" height="450"  sizes="height=30px">
-    </div>
+    @*<div>
+            <img src="~/img/Perfection-Construction-Logo-1.png" width="100%" width="400" height="450"  sizes="height=30px">
+        </div>*@
     <div class="row">
 
         <!-- Earnings (Monthly) Card Example -->
@@ -153,6 +153,7 @@
         </div>
     </div>
 
+
     @*<div class="col-xl-4 col-lg-5">
             <div class="card shadow mb-4">
                 Card Header - Dropdown
@@ -179,24 +180,33 @@
                     </div>
             </div>
         </div>*@
+
 }
 else
 {
-    <div>
-        <img src="~/img/Perfection-Construction-Logo-1.png" width="100%" height="30%" sizes="height=30px">
+    <div class="text-center">
+        <img src="~/img/Perfection-Construction-Logo-1.png" width="80%">
     </div>
+    <hr class="divider" />
+   
 
     <div class="text-center">
-        <img src="~/img/welcome-calligraphic-inscription-with-smooth-lines-vector.jpg" width="50%">
-        @*<b class="display-4" width="100%">Welcome</b>*@
-        @*<p> WELCOME TO PERFECTION CONSTRUCTION INC </p>*@
+        <img src="~/img/welcome-calligraphic-inscription-with-smooth-lines-vector.jpg" width="40%">
     </div>
+    <div class="text-center">
+
+        <img src="https://media.tenor.com/Ze8lxl-TgaEAAAAM/engineering.gif">
+
+    </div>
+
+
 
     <section class="page-section" id="contact">
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-lg-8 col-xl-6 text-center">
                     <h2 class="mt-0"> Welcome to Perfection Construction Inc!</h2>
+
                     <hr class="divider" />
                     <p class="text-muted mb-5">Ready to start your next project with us? Send us a messages and we will get back to you as soon as possible!</p>
                 </div>
@@ -262,5 +272,6 @@ else
             </div>
 
         </div>
+
     </section>
 }

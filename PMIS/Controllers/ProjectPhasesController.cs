@@ -26,9 +26,6 @@ namespace PMIS.Controllers
 
                 TempData["projectId"] = ProjectId;
                 TempData.Keep();
-                //if (TempData.ContainsKey("projectId"))
-                //    ViewBag.Project = projectPhaseRepo.GetProject((int)TempData["projectId"]);
-                //TempData.Keep();
                 ViewBag.Project = projectPhaseRepo.GetProject(ProjectId);
                 ViewBag.projectphases = projectPhaseRepo.GetAllProjectPhases();
                 return View();
@@ -41,13 +38,11 @@ namespace PMIS.Controllers
         public IActionResult NewProjectPhase() {
             try
             {
-                //if (TempData.ContainsKey("projectId"))
-                //    ViewBag.Project = projectPhaseRepo.GetProject((int)TempData["projectId"]);
-                //TempData.Keep();
                 int ProjectId = (int)TempData["projectId"];
                 TempData.Keep();
                 ViewBag.Project = projectPhaseRepo.GetProject(ProjectId);
                 ViewBag.Phases = projectPhaseRepo.GetAllPhases();
+
                 return View();
             }
             catch (Exception ex)
@@ -60,24 +55,24 @@ namespace PMIS.Controllers
         {
             try
             {
-                // projectPhase.ProjectPhaseId = projectPhase.PhaseId;
-                //if (TempData.ContainsKey("projectId"))
-                //{
-                //    projectPhase.ProjectId = (int)TempData["projectId"];
-                //}
-                //TempData.Keep();
+                ViewBag.Phases = projectPhaseRepo.GetAllPhases();
                 Project project = new Project();
                 int ProjectId = (int)TempData["projectId"];
                 ViewBag.Project = projectPhaseRepo.GetProject(ProjectId);
                 projectPhase.ProjectId = ProjectId;
                 TempData.Keep();
-                //project = projectPhaseRepo.GetProject(ProjectId);
-                //if (projectPhase.StartDate < project.StartDate)
-                //{
-                //    return ValidationProblem("error");
-                //}
+                
+                var Proj= projectPhaseRepo.GetProject(ProjectId);
+                if (Proj.StartDate > projectPhase.StartDate)
+                {
+                    ViewBag.error = false;
+                    return View();
+                }
+                if (Proj.EndDate < projectPhase.EndDate) {
+                    ViewBag.error1 = false;
+                    return View();
+                }
                 projectPhaseRepo.InsertProjectPhase(projectPhase);
-
                 return RedirectToAction("Index", new { ProjectId = ProjectId });
             }
             catch (Exception ex)
@@ -105,7 +100,29 @@ namespace PMIS.Controllers
             {
                 int ProjectId = (int)TempData["projectId"];
                 TempData.Keep();
-                projectPhaseRepo.EditProjectPhase(projectPhase);
+                ViewBag.Phase = projectPhaseRepo.GetAllPhases();
+
+
+                var P = projectPhaseRepo.GetProjectPhase(projectPhase.ProjectPhaseId);
+                P.StartDate = projectPhase.StartDate;
+                P.EndDate = projectPhase.EndDate;
+                P.PhaseId = projectPhase.PhaseId;
+                
+                
+                var Proj = projectPhaseRepo.GetProject(ProjectId);
+
+                if (Proj.StartDate > projectPhase.StartDate)
+                {
+                    ViewBag.error = false;
+                    return View(projectPhase);
+                }
+                if (Proj.EndDate < projectPhase.EndDate)
+                {
+                    ViewBag.error1 = false;
+                    return View(projectPhase);
+                }
+
+                projectPhaseRepo.EditProjectPhase(P);
 
                 return RedirectToAction("Index", new { ProjectId = ProjectId });
             }

@@ -24,22 +24,20 @@ namespace PMIS.Controllers
             clientRepo = ClientRepo;
         }
 
-        // GET: Client
+       
         public IActionResult Index()
         {
             var client = clientRepo.GetAllClient();
             return View(client);
         }
 
-        // GET: Client/Create
+       
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Client/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create( Client client)
@@ -52,7 +50,7 @@ namespace PMIS.Controllers
             return View(client);
         }
 
-        // GET: Client/Edit/5
+       
         public IActionResult Edit(int id)
         {
             
@@ -65,9 +63,7 @@ namespace PMIS.Controllers
             return View(client);
         }
 
-        // POST: Client/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit( Client client)
@@ -89,7 +85,7 @@ namespace PMIS.Controllers
             return View(client);
         }
 
-        // GET: Client/Delete/5
+       
         public IActionResult Delete(int id)
         {
             
@@ -104,7 +100,7 @@ namespace PMIS.Controllers
             return View(client);
         }
 
-        // POST: Client/Delete/5
+       
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)

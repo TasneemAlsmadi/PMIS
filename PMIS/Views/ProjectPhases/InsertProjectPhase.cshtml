@@ -8,7 +8,16 @@
     });
 
 </script>
+@if (ViewBag.error == false)
+{
+    <p class="text-danger"> The Selected Start Date of the Project Phase  is before the Project  Start Date.</p>
 
+}
+@if (ViewBag.error1 == false)
+{
+    <p class="text-danger"> The Selected End Date of the Project Phase  is after the Project  End Date.</p>
+
+}
 <form action="/ProjectPhases/InsertProjectPhase" method="post" enctype="multipart/form-data">
     @Html.HiddenFor(x => x.ProjectId)
     @Html.HiddenFor(x => x.ProjectPhaseId)
@@ -39,7 +48,7 @@
         </select>
     </div>
 
-   
+
     <button type="submit" class="btn btn-primary">Submit</button>
 
 </form>

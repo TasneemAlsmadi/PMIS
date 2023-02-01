@@ -15,30 +15,21 @@ namespace BMISBLayer.Repositories
         {
             this.context = context;
         }
-
         public void DeletePaymentTerm(int PaymentTermId)
         {
-            var p = context.PaymentTerm.SingleOrDefault(x => x.PaymentTermId == PaymentTermId);
+            var p = context.PaymentTerm.Include(x=>x.InvoicePaymentTerms).SingleOrDefault(x => x.PaymentTermId == PaymentTermId);
             context.Remove(p);
             context.SaveChanges();
         }
-
         public void EditPaymentTerm(PaymentTerm p)
         {
             context.PaymentTerm.Update(p);
             context.SaveChanges();
         }
-
         public List<PaymentTerm> GetAllPaymentTerm()
         {
             return context.PaymentTerm.Include(y=>y.Deliverable).Include(o=>o.Deliverable.ProjectPhase).Include(o=>o.Deliverable.ProjectPhase.Project).Include(o => o.Deliverable.ProjectPhase.Phase).ToList();
         }
-
-
-        //public List<Deliverable> GetAllProjectPhases(int projectId)
-        //{
-        //    return context.ProjectPhase.Where(s => s.ProjectId == projectId).Include(x => x.Project).Include(y => y.Phase).ToList();
-        //}
         public List<Deliverable> GetAllDeliverable(int ProjectPhaseId)
         {
             return context.Deliverable.Where(s => s.ProjectPhaseId == ProjectPhaseId).Include(x => x.ProjectPhaseId).Include(y => y.PaymentTerms).ToList();

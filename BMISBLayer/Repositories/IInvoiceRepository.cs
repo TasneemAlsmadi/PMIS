@@ -22,5 +22,6 @@ namespace BMISBLayer.Repositories
         String GetProjectName(int projectId);
         PaymentTerm GetAPaymentTerm(int PaymentTermId);
         Deliverable GetADel(int DeliverableId);
+        void DeleteInvoicePaymentTerm(int i, int j);
     }
 }

@@ -26,22 +26,7 @@ namespace PMIS.Controllers
             this.mapper = mapper;
         }
 
-        //[HttpGet]
-        //public JsonResult GetTotal() {
-        //    var invoiceid = TempData["Total"];
-        //    var Iid =InvoiceRepo.GetInvoicePaymentTerm(invoiceid);
-        //    var total = 0;
-
-        //    foreach (var i in Iid) {
-        //        var d = i.PaymentTermId == null ? default(int) :(int) i.PaymentTermId;
-        //        var s = InvoiceRepo.GetAPaymentTerm(d);
-        //        var t =s.PaymentTermAmount;
-        //        total =total +(int)t;
-
-        //    }
-
-        //    return new JsonResult(total);
-        //}
+        
 
         [HttpGet]
         public JsonResult GetPaymentTermsByProjectId(int ProjectId)
@@ -55,7 +40,6 @@ namespace PMIS.Controllers
                 var x = pq.PaymentTermId == null ? default(int) : pq.PaymentTermId.Value;
                 PI.PaymentTermId = x;
                 PI=InvoiceRepo.GetAPaymentTerm(x);
-              //  PI.PaymentTermTitle = pq.PaymentTermTitle;
                 PI1.Add(PI);
 
             }
@@ -77,38 +61,7 @@ namespace PMIS.Controllers
                             PaymentTerms.Add(PI);
                         }
                     }
-                
-
             
-      
-
-                    //foreach (var p2 in PI2)//p2.contain(p1)
-                    //{
-
-                    //   // int i = 0;
-                    //    foreach (var p1 in PI1)
-                    //    {
-                    //        if (p1.PaymentTermId == p2.PaymentTermId) {
-                    //            break;
-                    //        }
-                    //        var PI = new PaymentTerm();
-                    //        PI.PaymentTermId = p2.PaymentTermId;
-                    //        PI.PaymentTermTitle = p2.PaymentTermTitle;
-                    //        PaymentTerms.Add(PI);
-
-                    //        //if (p1.PaymentTermId != p2.PaymentTermId)
-                    //        //{
-                    //        //    //i=i+1;
-                    //        //    //if (i == PI2.Count) { 
-                    //        //    var PI = new PaymentTerm();
-                    //        //    PI.PaymentTermId = p2.PaymentTermId;
-                    //        //    PI.PaymentTermTitle = p2.PaymentTermTitle;
-                    //        //    PaymentTerms.Add(PI);
-
-
-                    //        //}
-                    //    }
-                    //}
                 }
                 else { PaymentTerms = null; }
             }
@@ -120,88 +73,15 @@ namespace PMIS.Controllers
 
             return new JsonResult(PaymentTerms);
     }
-       // [HttpGet]
-        //public JsonResult GetPaymentTermsByProjectIdEdit(int ProjectId)
-        //{
-        //    var uu = TempData["InvoiceId"];
-        //    TempData.Keep();
-        //    var s = InvoiceRepo.GetInvoice((int)uu);
-        //    var ss = s.ProjectId;
-            
-          
-            
-        //    var PI1 = InvoiceRepo.GetAllInvoicePaymentTerm(ProjectId);
-        //    var PI2 = InvoiceRepo.GetAllPaymentTerms(ProjectId);
-        //    List<PaymentTerm> PaymentTerms = new List<PaymentTerm>();
-        //    if (ss == ProjectId) {
-        //        PaymentTerms = PI2;
-        //        return new JsonResult(PaymentTerms);
-
-        //    }
-            //foreach (var u in PI3)
-            //{
-            //    PaymentTerm paymentTerm = new PaymentTerm();
-            //    var ii = 0;
-            //    ii = u.PaymentTermId == null ? default(int) : (int)u.PaymentTermId;
-            //    paymentTerm = InvoiceRepo.GetAPaymentTerm(ii);
-            //    PaymentTerms.Add(paymentTerm);
-            //}
-
-
-
-
-
-        //    if (PI1.Any<InvoicePaymentTerm>())
-        //    {
-        //        if (PI1.Count != PI2.Count)
-        //        {
-        //            foreach (var p2 in PI2)
-        //            {
-        //                // int i = 0;
-        //                foreach (var p1 in PI1)
-        //                {
-
-
-        //                    if (p1.PaymentTermId != p2.PaymentTermId)
-        //                    {
-        //                        //i=i+1;
-        //                        //if (i == PI2.Count) { 
-        //                        var PI = new PaymentTerm();
-        //                        PI.PaymentTermId = p2.PaymentTermId;
-        //                        PI.PaymentTermTitle = p2.PaymentTermTitle;
-        //                        PaymentTerms.Add(PI);
-
-
-        //                    }
-        //                }
-        //            }
-                   
-        //        }
-        //        else { PaymentTerms = null; }
-        //    }
-
-        //    else
-        //    {
-        //        PaymentTerms = PI2;
-        //    }
-            
-        //    return new JsonResult(PaymentTerms);
-        //}
-
+       
         public IActionResult Index()
         {
             try
             {
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                //TempData.Keep();
-                //TempData["total"] = TempData["total"];
-                //TempData.Keep();
-                //var project = projectRepo.GetProjectManagerProjects(userId).ToList();
+               
                 ViewBag.Invoice = InvoiceRepo.GetAllInvoices(userId);
                 ViewBag.Project = InvoiceRepo.GetAllProjects(userId);
-
-                //ViewBag.PaymentTerm = InvoiceRepo.GetAllPaymentTerms();
-                //ViewBag.InvoicePaymentTerm = InvoiceRepo.GetAllInvoicePaymentTerm();
                 return View();
             }
             catch (Exception ex)
@@ -287,15 +167,8 @@ namespace PMIS.Controllers
 
                 foreach (var p in InvoiceDTO.PaymentTermId)
                 {
-                    //PaymentTerm paymentTerm = new PaymentTerm();
+                    
                     InvoicePaymentTerm p1 = new InvoicePaymentTerm { Invoice = Invoice, InvoiceId = Invoice.InvoiceId, PaymentTermId = p };
-                    //p1.InvoiceId = Invoice.InvoiceId;
-                    //p1.PaymentTermId = p;
-
-                    //p1.PaymentTerm = paymentTerm;
-                    ////p1.PaymentTerm.PaymentTermId = p;
-                    //p1.PaymentTerm.PaymentTermAmount = InvoiceRepo.GetPTAmount(p);
-                    //total = total + InvoiceRepo.GetPTAmount(p);
                     p1.Invoice.ProjectId = Invoice.ProjectId;
 
                     InvoiceRepo.InsertInvoicePaymentTerm(p1);
@@ -307,8 +180,7 @@ namespace PMIS.Controllers
                 int ii;
                 ii = Invoice.ProjectId == null ? default(int) : Invoice.ProjectId.Value;
                 ViewBag.InvoicePaymentTerm = InvoiceRepo.GetAllInvoicePaymentTerm(ii);
-                //TempData["ii"] = ii;
-                //TempData.Keep();
+                
                 TempData["Total"] = Invoice.InvoiceId;
                 TempData.Keep();
                 ViewBag.Invoice = InvoiceRepo.GetInvoice(Invoice.InvoiceId);
@@ -355,12 +227,6 @@ namespace PMIS.Controllers
                 }
                 foreach (var pq in PaymentTerms)
                 {
-
-                    //var PI = new PaymentTerm();
-                    //int x = pq.PaymentTermId == null ? default(int) : pq.PaymentTermId.Value;
-
-                    //PI = InvoiceRepo.GetAPaymentTerm(x);
-
                     if (!sss.Contains(pq))
                     {
                         pt.Add(pq);
@@ -405,67 +271,46 @@ namespace PMIS.Controllers
         }
         public IActionResult UpdateInvoice(EditProjectDTO InvoiceDTO)
         {
-          
-            var Invoice = mapper.Map<Invoice>(InvoiceDTO);
-            //var d11 = Invoice.ProjectId == null ? default(int) : (int)Invoice.ProjectId;
-            List<InvoicePaymentTerm> ip = InvoiceRepo.GetInvoicePaymentTerm(Invoice.InvoiceId);
-            //int i = 0;
-            List<InvoicePaymentTerm> pp = new List<InvoicePaymentTerm>();
-            List<PaymentTerm> p2 = new List<PaymentTerm>();
-            foreach (var d in ip)
+            try
             {
-
-                var PI = new PaymentTerm();
-                var d1 = d.PaymentTermId == null ? default(int) : (int)d.PaymentTermId;
-                PI.PaymentTermId = d1;
-                PI = InvoiceRepo.GetAPaymentTerm(d1);
-                p2.Add(PI);
-
-            }
-            foreach(var p in InvoiceDTO.PaymentTermId)
-            {
-                var PI = new PaymentTerm();
-                PI = InvoiceRepo.GetAPaymentTerm(p);
-                //PaymentTerm paymentTerm = new PaymentTerm();
-                InvoicePaymentTerm p1 = new InvoicePaymentTerm { Invoice = Invoice, InvoiceId = Invoice.InvoiceId, PaymentTermId = p,PaymentTerm=PI };
-                //p1.InvoiceId = Invoice.InvoiceId;
-                //p1.PaymentTermId = p;
-
-                //p1.PaymentTerm = paymentTerm;
-                ////p1.PaymentTerm.PaymentTermId = p;
-                //p1.PaymentTerm.PaymentTermAmount = InvoiceRepo.GetPTAmount(p);
-                //total = total + InvoiceRepo.GetPTAmount(p);
-                p1.Invoice.ProjectId = Invoice.ProjectId;
-                if (p2.Contains(PI))
+                var invo = InvoiceRepo.GetInvoice(InvoiceDTO.InvoiceId);
+                invo.InvoiceDate = InvoiceDTO.InvoiceDate;
+                invo.InvoiceTitle = InvoiceDTO.InvoiceTitle;
+                List<InvoicePaymentTerm> invop = InvoiceRepo.GetInvoicePaymentTerm(invo.InvoiceId);
+                foreach (var s in invop)
                 {
-                   
-                   pp.Add(p1);
-                   
-                   
+                    var ee = s.PaymentTermId == null ? default(int) : (int)s.PaymentTermId;
+                    InvoiceRepo.DeleteInvoicePaymentTerm(invo.InvoiceId, ee);
+
                 }
-                else {
+                List<InvoicePaymentTerm> pp = new List<InvoicePaymentTerm>();
+                foreach (var p in InvoiceDTO.PaymentTermId)
+                {
+                    var PI = new PaymentTerm();
+                    PI = InvoiceRepo.GetAPaymentTerm(p);
+                   
+                    InvoicePaymentTerm p1 = new InvoicePaymentTerm { Invoice = invo, InvoiceId = invo.InvoiceId, PaymentTermId = p, PaymentTerm = PI };
+
+                    p1.Invoice.ProjectId = invo.ProjectId;
+
                     InvoiceRepo.InsertInvoicePaymentTerm(p1);
                     pp.Add(p1);
-                   
-                    
                 }
-                
+
+
+                invo.InvoicePaymentTerms = pp;
+
+
+
+                InvoiceRepo.EditInvoice(invo);
+
+                return RedirectToAction("Index");
             }
-            Invoice.InvoicePaymentTerms = pp;
 
-            //int ii;
-            //ii = Invoice.ProjectId == null ? default(int) : Invoice.ProjectId.Value;
-            //ViewBag.InvoicePaymentTerm = InvoiceRepo.GetAllInvoicePaymentTerm(ii);
-            //TempData["ii"] = ii;
-            //TempData.Keep();
-            //TempData["Total"] = Invoice.InvoiceId;
-            //TempData.Keep();
-            //ViewBag.Invoice = InvoiceRepo.GetInvoice(Invoice.InvoiceId);
-
-            InvoiceRepo.EditInvoice(Invoice);
-
-            return RedirectToAction("Index");
-
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         public IActionResult DeleteInvoice(int InvoiceId)
         {

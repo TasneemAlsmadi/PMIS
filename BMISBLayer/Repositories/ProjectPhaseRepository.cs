@@ -19,7 +19,7 @@ namespace BMISBLayer.Repositories
 
         public void DeleteProjectPhase(int ProjectPhaseId)
         {
-            var p = context.ProjectPhase.SingleOrDefault(x => x.ProjectPhaseId == ProjectPhaseId);
+            var p = context.ProjectPhase.Include(s=>s.Deliverables).SingleOrDefault(x => x.ProjectPhaseId == ProjectPhaseId);
             context.Remove(p);
             context.SaveChanges();
         }
@@ -58,7 +58,6 @@ namespace BMISBLayer.Repositories
         public void InsertProjectPhase(ProjectPhase projectPhase)
         {
             context.ProjectPhase.Add(projectPhase);
-            //context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.ProjectPhase ON;");
             context.SaveChanges();
         }
         public Project GetProject(int projectId) { 
