@@ -103,6 +103,7 @@ namespace PMIS.Controllers
                 ViewDTO editProjectDTO = new ViewDTO();
                 editProjectDTO.InvoiceId = InvoiceId;
                 editProjectDTO.InvoiceTitle = Invoice.InvoiceTitle;
+                editProjectDTO.InvoiceDate = Invoice.InvoiceDate;
                 editProjectDTO.ProjectId = ii;
                 editProjectDTO.Project = InvoiceRepo.GetProject(ii);
                 editProjectDTO.InvoicePaymentTerm = Invoice.InvoicePaymentTerms;
