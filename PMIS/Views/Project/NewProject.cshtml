@@ -3,42 +3,54 @@
 @model InsertProjectDTO
 
 
-    <script>
-        $(function () {
-            $("#StartDate").datepicker({ altformat: "yy-mm-dd" });
-            $("#EndDate").datepicker({ altformat: "yy-mm-dd" });
-        });
-        
-    </script>
+@{
+    ViewData["Title"] = "Create project";
+}
+<script>
+    $(function () {
+        $("#StartDate").datepicker({ altformat: "yy-mm-dd" });
+        $("#EndDate").datepicker({ altformat: "yy-mm-dd" });
+    });
+
+</script>
 
 
-    <form action="/Project/InsertProject" method="post" enctype="multipart/form-data">
+<form action="/Project/InsertProject" method="post" enctype="multipart/form-data">
 
-
+    <div class="border p-3">
+        @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+        <div class="row form-group">
+            <h2 class="text-black-50 pl-3">Add project</h2>
+        </div>
+        <hr />
         <div class="form-group">
-            <label> Project Name</label>
+            <label asp-for="ProjectName"></label>
             <input asp-for="ProjectName" />
+            <span asp-validation-for="ProjectName" class="text-danger"></span>
         </div>
 
         <div class="form-group">
-            <label> Contract Amount</label>
+            <label asp-for="ContractAmount"></label>
             <input asp-for="ContractAmount" />
+            <span asp-validation-for="ContractAmount" class="text-danger"></span>
         </div>
 
         <div class="form-group">
-            <label> Start Date</label>
+            <label asp-for="StartDate"></label>
             <input id="StartDate" name="StartDate" />
+            <span asp-validation-for="StartDate" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label> End Date</label>
+            <label asp-for=" EndDate"></label>
             <input id="EndDate" name="EndDate" />
+            <span asp-validation-for="EndDate" class="text-danger"></span>
         </div>
 
         <div class="form-group">
-            <label> Select Project Type</label>
+            <label asp-for="ProjectTypeName"></label>
             <select name="ProjectTypeId" class="form-control">
                 @{
-                                <option selected="selected" disabled> Select Project Type</option>
+                    <option selected="selected" disabled> Select Project Type</option>
                     foreach (var pt in (List<ProjectType>)ViewBag.ProjectType)
                     {
                         <option value="@pt.ProjectTypeId">@pt.ProjectTypeName</option>
@@ -49,7 +61,7 @@
             </select>
         </div>
         <div class="form-group">
-            <label> Select Project Status</label>
+            <label asp-for="Status"></label>
             <select name="ProjectStatusId" class="form-control">
                 @{
                     <option selected="selected" disabled> Select Project Status</option>
@@ -63,7 +75,7 @@
             </select>
         </div>
         <div class="form-group">
-            <label> Select Client</label>
+            <label> Select client</label>
             <select name="ClientId" class="form-control">
                 @{
                     <option selected="selected" disabled> Select Client</option>
@@ -77,24 +89,45 @@
             </select>
         </div>
         @*</div>
-        <div class="form-group">
-            <label> Select Project Phases </label>
-            <select name="ProjectPhases" multiple class="form-control" >
-                @{
-                    foreach (var pp in (List<Phase>)ViewBag.Phases)
-                    {
-                        <option value="@pp.PhaseId">@pp.PhaseName</option>
+            <div class="form-group">
+                <label> Select Project Phases </label>
+                <select name="ProjectPhases" multiple class="form-control" >
+                    @{
+                        foreach (var pp in (List<Phase>)ViewBag.Phases)
+                        {
+                            <option value="@pp.PhaseId">@pp.PhaseName</option>
 
 
+                        }
                     }
-                }
-            </select>
-        </div>*@
+                </select>
+            </div>*@
         <div class="form-group">
-            <label> Upload Contract </label>
+            <label> Upload contract </label>
             <input type="file" name="ContractFile" />
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="form-group row">
+            <div class="col-8 offset-2 row">
+                <div class="col">
+                    <input type="submit" class="btn btn-info w-75" value="Create" />
+                </div>
+                <div class="col">
+                    <a asp-controller="Project" asp-action="Index" class="btn btn-danger w-75">Back</a>
+                </div>
 
-    </form>
+
+            </div>
+        </div>
+
+
+    </div>
+</form>
+
+@section Scripts{
+
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+}

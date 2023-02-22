@@ -1,6 +1,10 @@
 ﻿@using PMIS.DTOs
 @using BMISBLayer.Entities
 @model Project
+
+@{
+    ViewData["Title"] = "Edit project";
+}
 <script>
     $(function () {
         $("#StartDate").datepicker({ altformat: "yy-mm-dd" });
@@ -11,88 +15,118 @@
 <form action="/Project/UpdateProject" method="post" enctype="multipart/form-data">
 
     @Html.HiddenFor(x => x.ProjectId)
-    <div class="form-group">
-        <label> Project Name</label>
-        <input asp-for="ProjectName" name="ProjectName" value="@Model.ProjectName" />
-    </div>
+    <div class="border p-3">
+        @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+        <div class="row form-group">
+            <h2 class="text-black-50 pl-3">Edit project</h2>
+        </div>
+        <hr />
+        <div class="form-group">
+            <label> Project Name</label>
+            <input asp-for="ProjectName" name="ProjectName" value="@Model.ProjectName" />
+            <span asp-validation-for="ProjectName" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label>Contract Amount</label>
-        <input asp-for="ContractAmount" value="@Model.ContractAmount" />
-    </div>
-    <div class="form-group">
-        <label> Start Date</label>
-        <input id="StartDate" name="StartDate" value="@Model.StartDate" />
-    </div>
-    <div class="form-group">
-        <label> End Date</label>
-        <input id="EndDate" name="EndDate" value="@Model.EndDate" />
-    </div>
+        <div class="form-group">
+            <label>Contract Amount</label>
+            <input asp-for="ContractAmount" value="@Model.ContractAmount" />
+            <span asp-validation-for="ContractAmount" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label> Start Date</label>
+            <input id="StartDate" name="StartDate" value="@Model.StartDate" />
+            <span asp-validation-for="StartDate" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label> End Date</label>
+            <input id="EndDate" name="EndDate" value="@Model.EndDate" />
+            <span asp-validation-for="EndDate" class="text-danger"></span>
+        </div>
 
 
-    <div class="form-group">
+        <div class="form-group">
 
-        <label> Select Project Type</label>
-        <select name="ProjectTypeId" class="form-control">
-            @{
-                foreach (var c in (List<ProjectType>)ViewBag.ProjectType)
-                {
-                    if (Model.ProjectTypeId.Equals(c.ProjectTypeId))
+            <label> Select Project Type</label>
+            <select name="ProjectTypeId" class="form-control">
+                @{
+                    foreach (var c in (List<ProjectType>)ViewBag.ProjectType)
                     {
-                        <option selected="selected" value="@c.ProjectTypeId">@c.ProjectTypeName</option>
-                    }
-                    else
-                    {
-                        <option value="@c.ProjectTypeId">@c.ProjectTypeName</option>
-                    }
-
-                }
-            }
-        </select>
-    </div>
-    <div class="form-group">
-        <label> Select Project Status</label>
-        <select name="ProjectStatusId" class="form-control">
-            @{
-                foreach (var ps in (List<ProjectStatus>)ViewBag.ProjectStatus)
-                {
-                    if (Model.ProjectStatusId.Equals(ps.ProjectStatusId))
-                    {
-                        <option selected="selected" value="@ps.ProjectStatusId">@ps.Status</option>
-                    }
-                    else
-                    {
-                        <option value="@ps.ProjectStatusId">@ps.Status</option>
+                        if (Model.ProjectTypeId.Equals(c.ProjectTypeId))
+                        {
+                            <option selected="selected" value="@c.ProjectTypeId">@c.ProjectTypeName</option>
+                        }
+                        else
+                        {
+                            <option value="@c.ProjectTypeId">@c.ProjectTypeName</option>
+                        }
 
                     }
                 }
-            }
-        </select>
-    </div>
-    <div class="form-group">
-        <label> Select Client</label>
-        <select name="ClientId" class="form-control">
-            @{
-                foreach (var ps in (List<Client>)ViewBag.Client)
-                {
-                    if (Model.ProjectId.Equals(ps.ClientId))
+            </select>
+        </div>
+        <div class="form-group">
+            <label> Select Project Status</label>
+            <select name="ProjectStatusId" class="form-control">
+                @{
+                    foreach (var ps in (List<ProjectStatus>)ViewBag.ProjectStatus)
                     {
-                        <option selected="selected" value="@ps.ClientId">@ps.ClientName</option>
-                    }
-                    else
-                    {
-                        <option value="@ps.ClientId">@ps.ClientName</option>
+                        if (Model.ProjectStatusId.Equals(ps.ProjectStatusId))
+                        {
+                            <option selected="selected" value="@ps.ProjectStatusId">@ps.Status</option>
+                        }
+                        else
+                        {
+                            <option value="@ps.ProjectStatusId">@ps.Status</option>
 
+                        }
                     }
                 }
-            }
-        </select>
-    </div>
+            </select>
+        </div>
+        <div class="form-group">
+            <label> Select Client</label>
+            <select name="ClientId" class="form-control">
+                @{
+                    foreach (var ps in (List<Client>)ViewBag.Client)
+                    {
+                        if (Model.ProjectId.Equals(ps.ClientId))
+                        {
+                            <option selected="selected" value="@ps.ClientId">@ps.ClientName</option>
+                        }
+                        else
+                        {
+                            <option value="@ps.ClientId">@ps.ClientName</option>
 
-    <div class="form-group">
-        <label value="@Model.ContractFileName"> Upload Contract </label>
-        <input type="file" name="ContractFile" />
+                        }
+                    }
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label value="@Model.ContractFileName"> Upload Contract </label>
+            <input type="file" name="ContractFile" />
+        </div>
+        <div class="form-group row">
+            <div class="col-8 offset-2 row">
+                <div class="col">
+                    <input type="submit" class="btn btn-info w-75" value="Update" />
+                </div>
+                <div class="col">
+                    <a asp-controller="Project" asp-action="Index" class="btn btn-danger w-75">Back</a>
+                </div>
+
+
+            </div>
+        </div>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
+
+@section Scripts{
+
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+}

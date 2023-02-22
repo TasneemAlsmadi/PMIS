@@ -2,6 +2,9 @@
 @using BMISBLayer.Entities
 @model PaymentTerm
 
+@{
+    ViewData["Title"] = "Create payment term";
+}
 
 <script>
     $(function () {
@@ -10,31 +13,58 @@
     });
 
 </script>
-@if (ViewBag.error == false)
-{
-<p class="text-danger"> The PaymentTerm Amount is greater than Project Amount.</p>
 
-
-}
 
 <form action="/PaymentTerm/InsertPaymentTerm" method="post" enctype="multipart/form-data">
+    <div class="border p-3">
 
-    <div class="form-group">
-        <label> Payment Term Name</label>
-        <input asp-for="PaymentTermTitle" />
+        <div class="row form-group">
+            <h2 class="text-black-50 pl-3">Add payment term</h2>
+        </div>
+        <hr />
+        <div class="form-group">
+            <label> Payment Term Name</label>
+            <input asp-for="PaymentTermTitle" />
+            <span asp-validation-for="PaymentTermTitle" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label> Payment Term Amount </label>
+            <input asp-for="PaymentTermAmount" />
+            <span asp-validation-for="PaymentTermAmount" class="text-danger"></span>
+            @if (ViewBag.error == false)
+            {
+                <span class="text-danger"> The PaymentTerm Amount is greater than Project Amount.</span>
+
+
+            }
+        </div>
+
+        <div class="form-group">
+            <label> Payment Term Date</label>
+            <input id="PaymentTermDate" name="PaymentTermDate" />
+            <span asp-validation-for="PaymentTermDate" class="text-danger"></span>
+        </div>
+
+
+        <div class="form-group row">
+            <div class="col-8 offset-2 row">
+                <div class="col">
+                    <input type="submit" class="btn btn-info w-75" value="Create" />
+                </div>
+                <div class="col">
+                    <a asp-controller="Project" asp-action="Index" class="btn btn-danger w-75">Back</a>
+                </div>
+            </div>
+
+        </div>
     </div>
-
-    <div class="form-group">
-        <label> Payment Term Amount </label>
-        <input asp-for="PaymentTermAmount" />
-    </div>
-
-    <div class="form-group">
-        <label> Payment Term Date</label>
-        <input id="PaymentTermDate" name="PaymentTermDate" />
-    </div>
-
-
-    <button type="submit" class="btn btn-primary">Submit</button>
-
 </form>
+
+@section Scripts{
+
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+}

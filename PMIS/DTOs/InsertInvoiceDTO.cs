@@ -13,14 +13,16 @@ namespace PMIS.DTOs
     {
       
         public int InvoiceId { get; set; }
-            public string InvoiceTitle{ get; set; }
+        [Required]
+        public string InvoiceTitle{ get; set; }
             
-            [DisplayFormat(DataFormatString = "yyyy-MM-dd")]
-            [DataType(DataType.Date)]
-            public DateTime InvoiceDate { get; set; }
+        [DisplayFormat(DataFormatString = "yyyy-MM-dd")]
+        [DataType(DataType.Date)]
+        [Required]
+        public DateTime InvoiceDate { get; set; }
        
         public List<int> PaymentTermId { get; set; }
-    public List<InvoicePaymentTerm> InvoicePaymentTerm { get; set; }
+        public List<InvoicePaymentTerm> InvoicePaymentTerm { get; set; }
         public Project Project { get; set; }
         public int ProjectId { get; set; }
 

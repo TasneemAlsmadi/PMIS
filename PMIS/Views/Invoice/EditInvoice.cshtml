@@ -2,6 +2,9 @@
 @using BMISBLayer.Entities
 @model EditProjectDTO
 
+@{
+    ViewData["Title"] = "Edit invoice";
+}
 
 <script>
     $(function () {
@@ -15,68 +18,95 @@
     @Html.HiddenFor(x => x.InvoiceId)
 
     @Html.HiddenFor(x => x.ProjectId)
+    <div class="border p-3">
 
-    <div class="form-group">
-        <label> Invoice Name </label>
-        <input asp-for="InvoiceTitle" value="@Model.InvoiceTitle" />
-    </div>
-
-
-    <div class="form-group">
-        <label> Invoice Date</label>
-        <input id="InvoiceDate" name="InvoiceDate" value="@Model.InvoiceDate" />
-    </div>
-
-
-    <div class="form-group">
-        <label> Project:</label>
+        <div class="row form-group">
+            <h2 class="text-black-50 pl-3">Edit invoice</h2>
+        </div>
+        <hr />
+        <div class="form-group">
+            <label> Invoice Name </label>
+            <input asp-for="InvoiceTitle" value="@Model.InvoiceTitle" />
+            <span asp-validation-for="InvoiceTitle" class="text-danger"></span>
+        </div>
 
 
-        @{
-            foreach (var c in (List<Project>)ViewBag.Project)
-            {
-                if (Model.ProjectId.Equals(c.ProjectId))
-                {
-                    <div value="@c.ProjectId">@c.ProjectName</div>
-                }
-                else
-                {
-
-                }
-
-            }
-
-        }
-
-    </div>
+        <div class="form-group">
+            <label> Invoice Date</label>
+            <input id="InvoiceDate" name="InvoiceDate" value="@Model.InvoiceDate" />
+            <span asp-validation-for="InvoiceDate" class="text-danger"></span>
+        </div>
 
 
-    <div class="form-group">
-        <label> Select PaymentTerm </label>
-        <select name="PaymentTermId" id="PaymentTermId" class="form-control" multiple>
+        <div class="form-group">
+            <label> Project:</label>
+
+
             @{
-                foreach (var c in Model.PaymentTerms)
+                foreach (var c in (List<Project>)ViewBag.Project)
                 {
-                    //foreach (var cc in (List<PaymentTerm>)ViewBag.p)
-                    //{
-
-
-                    List<PaymentTerm> bc = (List<PaymentTerm>)ViewBag.pp;
-                    if (bc.Contains(c))
+                    if (Model.ProjectId.Equals(c.ProjectId))
                     {
-                        <option selected="selected" value="@c.PaymentTermId">@c.PaymentTermTitle</option>
+                        <div value="@c.ProjectId">@c.ProjectName</div>
                     }
                     else
                     {
-                        <option value="@c.PaymentTermId">@c.PaymentTermTitle</option>
+
                     }
 
-
-
-
                 }
+
             }
-        </select>
+
+        </div>
+
+
+        <div class="form-group">
+            <label> Select PaymentTerm </label>
+            <select name="PaymentTermId" id="PaymentTermId" class="form-control" multiple>
+                @{
+                    foreach (var c in Model.PaymentTerms)
+                    {
+                        //foreach (var cc in (List<PaymentTerm>)ViewBag.p)
+                        //{
+
+
+                        List<PaymentTerm> bc = (List<PaymentTerm>)ViewBag.pp;
+                        if (bc.Contains(c))
+                        {
+                            <option selected="selected" value="@c.PaymentTermId">@c.PaymentTermTitle</option>
+                        }
+                        else
+                        {
+                            <option value="@c.PaymentTermId">@c.PaymentTermTitle</option>
+                        }
+
+
+
+
+                    }
+                }
+            </select>
+        </div>
+        <div class="form-group row">
+            <div class="col-8 offset-2 row">
+                <div class="col">
+                    <input type="submit" class="btn btn-info w-75" value="Update" />
+                </div>
+                <div class="col">
+                    <a asp-controller="Invoice" asp-action="Index" class="btn btn-danger w-75">Back</a>
+                </div>
+            </div>
+
+        </div>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+
 </form>
+
+@section Scripts{
+
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+}

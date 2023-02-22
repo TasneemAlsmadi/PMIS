@@ -57,12 +57,11 @@ namespace PMIS.Controllers
         }
 
         [HttpPost]
+       // [ValidateAntiForgeryToken]
         public IActionResult InsertProject(InsertProjectDTO projectDTO)
         {
-            try
-            {
+            try { 
 
-                
                 var project = mapper.Map<Project>(projectDTO);
                
                 project.ContractFileName = projectDTO.ContractFile.FileName;
@@ -118,9 +117,10 @@ namespace PMIS.Controllers
                 throw ex;
             }
         }
+        
         public IActionResult UpdateProject(InsertProjectDTO projectDTO)
         {
-            try
+           try
             {
                 var project = mapper.Map<Project>(projectDTO);
                 project.ContractFileName = projectDTO.ContractFile.FileName;
@@ -146,6 +146,7 @@ namespace PMIS.Controllers
                 throw ex;
             }
         }
+      
         public IActionResult DeleteProject(int projectId)
         {
             try {

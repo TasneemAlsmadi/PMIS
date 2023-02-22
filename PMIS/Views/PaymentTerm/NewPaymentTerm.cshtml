@@ -3,49 +3,79 @@
 @model PaymentTerm
 
 
+@{
+    ViewData["Title"] = "Create Payment term";
+}
 <script>
-        $(function () {
-            $("#PaymentTermDate").datepicker({ altformat: "yy-mm-dd" });
-           
-        });
+    $(function () {
+        $("#PaymentTermDate").datepicker({ altformat: "yy-mm-dd" });
+
+    });
 
 </script>
 
 
 <form action="/PaymentTerm/InsertPaymentTerm" method="post" enctype="multipart/form-data">
-   
-    <div class="form-group">
-        <label> Payment Term Name</label>
-        <input asp-for="PaymentTermTitle" />
+    <div class="border p-3">
+
+        <div class="row form-group">
+            <h2 class="text-black-50 pl-3">Add payment term</h2>
+        </div>
+        <hr />
+        <div class="form-group">
+            <label> Payment Term Name</label>
+            <input asp-for="PaymentTermTitle" />
+            <span asp-validation-for="PaymentTermTitle" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label> Payment Term Amount </label>
+            <input asp-for="PaymentTermAmount" />
+            <span asp-validation-for="PaymentTermAmount" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label> Payment Term Date</label>
+            <input id="PaymentTermDate" name="PaymentTermDate" />
+            <span asp-validation-for="PaymentTermDate" class="text-danger"></span>
+        </div>
+
+
+
+        @*<div class="form-group">
+                <label> Select Deliverable </label>
+                <select name="DeliverableId" class="form-control">
+                    @{
+                        foreach (var pp in (List<Deliverable>)ViewBag.Deliverables)
+                        {
+                            <option value="@pp.DeliverableId">@pp.DeliverableName</option>
+
+
+                        }
+                    }
+                </select>
+            </div>*@
+
+
+
+        <div class="form-group row">
+            <div class="col-8 offset-2 row">
+                <div class="col">
+                    <input type="submit" class="btn btn-info w-75" value="Create" />
+                </div>
+                <div class="col">
+                    <a asp-controller="Project" asp-action="Index" class="btn btn-danger w-75">Back</a>
+                </div>
+            </div>
+
+        </div>
     </div>
-
-    <div class="form-group">
-        <label> Payment Term Amount </label>
-        <input asp-for="PaymentTermAmount" />
-    </div>
-
-    <div class="form-group">
-        <label> Payment Term Date</label>
-        <input id="PaymentTermDate" name="PaymentTermDate" />
-    </div>
-
-
-
-    @*<div class="form-group">
-        <label> Select Deliverable </label>
-        <select name="DeliverableId" class="form-control">
-            @{
-                foreach (var pp in (List<Deliverable>)ViewBag.Deliverables)
-                {
-                    <option value="@pp.DeliverableId">@pp.DeliverableName</option>
-
-
-                }
-            }
-        </select>
-    </div>*@
-
-
-    <button type="submit" class="btn btn-primary">Submit</button>
-
 </form>
+
+@section Scripts{
+
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+}

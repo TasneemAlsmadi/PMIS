@@ -1,6 +1,10 @@
 ﻿
 @using BMISBLayer.Entities
 @model ProjectPhase
+
+@{
+    ViewData["Title"] = "Create phase";
+}
 <script>
     $(function () {
         $("#StartDate").datepicker({ altformat: "yy-mm-dd" });
@@ -8,47 +12,76 @@
     });
 
 </script>
-@if (ViewBag.error == false)
-{
-    <p class="text-danger"> The Selected Start Date of the Project Phase  is before the Project  Start Date.</p>
 
-}
-@if (ViewBag.error1 == false)
-{
-    <p class="text-danger"> The Selected End Date of the Project Phase  is after the Project  End Date.</p>
-
-}
 <form action="/ProjectPhases/InsertProjectPhase" method="post" enctype="multipart/form-data">
     @Html.HiddenFor(x => x.ProjectId)
     @Html.HiddenFor(x => x.ProjectPhaseId)
-    <div class="form-group">
-        <label> Start Date</label>
-        <input id="StartDate" name="StartDate" />
-    </div>
-    <div class="form-group">
-        <label> End Date</label>
-        <input id="EndDate" name="EndDate" />
-    </div>
+    <div class="border p-3">
 
-    <div class="form-group">
-        <label> Select Project Phases </label>
-        <select name="PhaseId" class="form-control">
-            @{
-                <option selected="selected" disabled> Select Phases</option>
-                foreach (var pp in (List<Phase>)ViewBag.Phases)
-                {
+        <div class="row form-group">
+            <h2 class="text-black-50 pl-3">Add phase</h2>
+        </div>
+        <hr />
+        <div class="form-group">
+            <label> Start Date</label>
+            <input id="StartDate" name="StartDate" />
+            <span asp-validation-for="StartDate" class="text-danger"></span>
+            @if (ViewBag.error == false)
+            {
+                <span class="text-danger"> The Selected Start Date of the Project Phase  is before the Project  Start Date.</span>
 
-                    <option value="@pp.PhaseId">@pp.PhaseName</option>
-
-
-
-
-                }
             }
-        </select>
+        </div>
+        <div class="form-group">
+            <label> End Date</label>
+            <input id="EndDate" name="EndDate" />
+            <span asp-validation-for="EndDate" class="text-danger"></span>
+
+            @if (ViewBag.error1 == false)
+            {
+                <span class="text-danger"> The Selected End Date of the Project Phase  is after the Project  End Date.</span>
+
+            }
+        </div>
+
+        <div class="form-group">
+            <label> Select Project Phases </label>
+            <select name="PhaseId" class="form-control">
+                @{
+                    <option selected="selected" disabled> Select Phases</option>
+                    foreach (var pp in (List<Phase>)ViewBag.Phases)
+                    {
+
+                        <option value="@pp.PhaseId">@pp.PhaseName</option>
+
+
+
+
+                    }
+                }
+            </select>
+        </div>
+
+
+        <div class="form-group row">
+            <div class="col-8 offset-2 row">
+                <div class="col">
+                    <input type="submit" class="btn btn-info w-75" value="Create" />
+                </div>
+                <div class="col">
+                    <a asp-controller="Project" asp-action="Index" class="btn btn-danger w-75">Back</a>
+                </div>
+
+
+            </div>
+        </div>
     </div>
-
-
-    <button type="submit" class="btn btn-primary">Submit</button>
-
 </form>
+
+@section Scripts{
+
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+}

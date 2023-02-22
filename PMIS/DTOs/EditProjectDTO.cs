@@ -11,10 +11,12 @@ namespace PMIS.DTOs
     {
 
         public int InvoiceId { get; set; }
+        [Required]
         public string InvoiceTitle { get; set; }
 
         [DisplayFormat(DataFormatString = "yyyy-MM-dd")]
         [DataType(DataType.Date)]
+        [Required]
         public DateTime InvoiceDate { get; set; }
 
         public List<int> PaymentTermId { get; set; }

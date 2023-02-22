@@ -2,82 +2,96 @@
 @model Deliverable
 
 
+@{
+    ViewData["Title"] = "Deliverables";
+}
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary"> Deliverables</h2>
+        </div>
+        <div class="col-6 text-right">
+            <a asp-controller="Deliverable" asp-action="NewDeliverable" class="btn btn-primary"> Create new deliverable</a>
+        </div>
 
-    <a class="btn btn-primary" href="/Deliverable/NewDeliverable">Create New Deliverable</a>
-<div class="table-responsive">
-    <table id="myTable" class="table table-bordered" width="100%" cellspacing="0">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.DeliverableName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DeliverableDescription)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ProjectPhase.ProjectPhaseName)
-                </th>
+    </div>
+    <br />
 
-                <th>
-                    @Html.DisplayNameFor(model => model.StartDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.EndDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PaymentTerms)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="table-responsive">
+        <table id="myTable" class="table table-bordered" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DeliverableName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DeliverableDescription)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ProjectPhase.ProjectPhaseName)
+                    </th>
 
-            @foreach (var item in (List<Deliverable>)ViewBag.Deliverables)
-            {
-                ProjectPhase pp = (ProjectPhase)ViewBag.ProjectPhase;
-                Project p = (Project)ViewBag.Project;
-                if (p.ProjectId == item.ProjectPhase.ProjectId)
+                    <th>
+                        @Html.DisplayNameFor(model => model.StartDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.EndDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PaymentTerms)
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in (List<Deliverable>)ViewBag.Deliverables)
                 {
+                    ProjectPhase pp = (ProjectPhase)ViewBag.ProjectPhase;
+                    Project p = (Project)ViewBag.Project;
+                    if (p.ProjectId == item.ProjectPhase.ProjectId)
+                    {
 
 
-                    //if (@item.ProjectPhaseId == @pp.ProjectPhaseId)
-                    //{
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DeliverableName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DeliverableDescription)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProjectPhase.Phase.PhaseName)
-                </td>
+                        //if (@item.ProjectPhaseId == @pp.ProjectPhaseId)
+                        //{
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DeliverableName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DeliverableDescription)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ProjectPhase.Phase.PhaseName)
+                            </td>
 
-                <td>
-                    @item.StartDate.ToString("d")
-                </td>
-                <td>
-                    @item.EndDate.ToString("d")
-                </td>
-                <td>
-                    <a class="text-success" href="/Deliverable/EditDeliverable?DeliverableId=@item.DeliverableId"><i class="fa-regular fa-pen-to-square"></i></a> |
-                    <a href="/PaymentTerm/Index?DeliverableId=@item.DeliverableId">PaymentTerms</a>|
-                    <a class="text-danger" href="/Deliverable/DeleteDeliverable?DeliverableId=@item.DeliverableId"><i class="fa-solid fa-trash"></i></a>
-                </td>
-            </tr>
+                            <td>
+                                @item.StartDate.ToString("d")
+                            </td>
+                            <td>
+                                @item.EndDate.ToString("d")
+                            </td>
+                            <td>
+                                <a class="text-success" href="/Deliverable/EditDeliverable?DeliverableId=@item.DeliverableId"><i class="fa-regular fa-pen-to-square"></i></a> |
+                                <a href="/PaymentTerm/Index?DeliverableId=@item.DeliverableId">PaymentTerms</a>|
+                                <a class="text-danger" href="/Deliverable/DeleteDeliverable?DeliverableId=@item.DeliverableId"><i class="fa-solid fa-trash"></i></a>
+                            </td>
+                        </tr>
 
+                    }
                 }
-            }
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 </div>
 @section scripts{
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jq-3.6.0/dt-1.12.1/b-2.2.3/fc-4.1.0/sc-2.0.6/sb-1.3.3/sp-2.0.1/sl-1.4.0/datatables.min.css" />
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jq-3.6.0/dt-1.12.1/b-2.2.3/fc-4.1.0/sc-2.0.6/sb-1.3.3/sp-2.0.1/sl-1.4.0/datatables.min.js"></script>
     <script>
-            $(document).ready(function () {
-                $('#myTable').DataTable();
-            });
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
     </script>
 
 

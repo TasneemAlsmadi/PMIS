@@ -3,8 +3,11 @@
 @model InsertInvoiceDTO
 
 
+@{
+    ViewData["Title"] = "Create invoice";
+}
 <script>
-   
+
     $(function () {
         $("InvoiceDate").datepicker({ altformat: "yy-mm-dd" });
     });
@@ -12,7 +15,7 @@
 </script>
 <script>
     function GetProjectId() {
-        //debugger;
+
         var ProjectId = $("#ProjectId").val();
         $.ajax({
             url: "/Invoice/GetPaymentTermsByProjectId",
@@ -26,7 +29,6 @@
 
                     $("#PaymentTermId").append("<option value=" + pp.paymentTermId + ">" + pp.paymentTermTitle + "</option>")
                     console.log(pp);
-                    //$("#PaymentTermId").addClass("s");
 
                     debugger;
                     console.log(pp.paymentTermId);
@@ -56,40 +58,64 @@
 <form action="/Invoice/InsertInvoice" method="post" enctype="multipart/form-data">
 
     @*@Html.HiddenFor(x => x.DeliverableId)*@
-    <div class="form-group">
-        <label> Invoice Name</label>
-        <input asp-for="InvoiceTitle" />
-    </div>
+    <div class="border p-3">
 
-    <div class="form-group">
-        <label> Invoice Date </label>
-        <input asp-for="InvoiceDate" id="InvoiceDate" />
-    </div>
+        <div class="row form-group">
+            <h2 class="text-black-50 pl-3">Add invoice</h2>
+        </div>
+        <hr />
+        <div class="form-group">
+            <label> Invoice Name</label>
+            <input asp-for="InvoiceTitle" />
+            <span asp-validation-for="InvoiceTitle" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label> Select Project </label>
-        <select id="ProjectId" name="ProjectId" class="form-control" onchange="GetProjectId()">
-            @{
-                        <option selected="selected" disabled> Select Project</option>
-                foreach (var pp in (List<Project>)ViewBag.Project)
-                {
-                    <option value="@pp.ProjectId">@pp.ProjectName</option>
+        <div class="form-group">
+            <label> Invoice Date </label>
+            <input asp-for="InvoiceDate" id="InvoiceDate" />
+            <span asp-validation-for="InvoiceDate" class="text-danger"></span>
+        </div>
 
+        <div class="form-group">
+            <label> Select Project </label>
+            <select id="ProjectId" name="ProjectId" class="form-control" onchange="GetProjectId()">
+                @{
+                    <option selected="selected" disabled> Select Project</option>
+                    foreach (var pp in (List<Project>)ViewBag.Project)
+                    {
+                        <option value="@pp.ProjectId">@pp.ProjectName</option>
+
+
+                    }
 
                 }
+            </select>
+        </div>
 
-            }
-        </select>
+
+        <div class="form-group">
+            <label> Select PaymentTerm </label>
+            <select asp-for="PaymentTermId" id="PaymentTermId" class="form-control" multiple>
+            </select>
+        </div>
+        <div class="form-group row">
+            <div class="col-8 offset-2 row">
+                <div class="col">
+                    <input type="submit" class="btn btn-info w-75" value="Create" />
+                </div>
+                <div class="col">
+                    <a asp-controller="Invoice" asp-action="Index" class="btn btn-danger w-75">Back</a>
+                </div>
+            </div>
+
+        </div>
     </div>
-
-
-    <div class="form-group">
-        <label> Select PaymentTerm </label>
-        <select asp-for="PaymentTermId" id="PaymentTermId" class="form-control" multiple>
-        </select>
-    </div>
-
-
-    <button type="submit" class="btn btn-primary">Submit</button>
-
 </form>
+
+@section Scripts{
+
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+}

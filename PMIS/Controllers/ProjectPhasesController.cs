@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BMISBLayer.Entities;
 using BMISBLayer.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PMIS.Controllers
 {
+    [Authorize]
     public class ProjectPhasesController : Controller
     {
         private readonly IProjectPhaseRepository projectPhaseRepo;
@@ -51,6 +53,7 @@ namespace PMIS.Controllers
             }
 
         }
+        [HttpPost]
         public IActionResult InsertProjectPhase(ProjectPhase projectPhase)
         {
             try
@@ -94,6 +97,7 @@ namespace PMIS.Controllers
                 throw ex;
             }
         }
+       
         public IActionResult UpdateProjectPhase(ProjectPhase projectPhase)
         {
             try
@@ -131,6 +135,7 @@ namespace PMIS.Controllers
                 throw ex;
             }
         }
+       
         public IActionResult DeleteProjectPhase(int projectPhaseId)
         {
             try

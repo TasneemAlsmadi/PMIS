@@ -73,7 +73,7 @@ namespace PMIS.Controllers
         [HttpPost]
         public IActionResult InsertDeliverable(Deliverable Deliverable)
         {
-            try
+           try
             {
                 int ProjectId = (int)TempData["projectId"];
                 ViewBag.Project = DeliverableRepo.GetProject(ProjectId);
@@ -151,7 +151,6 @@ namespace PMIS.Controllers
             {
                 throw ex;
             }
-
 
         }
         public IActionResult DeleteDeliverable(int DeliverableId)

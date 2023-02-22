@@ -6,12 +6,14 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using BMISBLayer.Entities;
 using BMISBLayer.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PMIS.Models;
 
 namespace PMIS.Controllers
 {
+  
     public class HomeController : Controller
     {
         private readonly IHomeRepository HomeRepository;

@@ -1,71 +1,85 @@
 ﻿@using BMISBLayer.Entities
 @model PaymentTerm
 
+@{
+    ViewData["Title"] = "Payment Terms";
+}
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary"> Payment Terms</h2>
+        </div>
+        <div class="col-6 text-right">
+            <a asp-controller="PaymentTerm" asp-action="NewPaymentTerm" class="btn btn-primary"> Create payment term</a>
+        </div>
+
+    </div>
+    <br />
 
 
-<a class="btn btn-primary" href="/PaymentTerm/NewPaymentTerm">Create New PaymentTerm</a>
-<div class="table-responsive">
-    <table id="myTable" class="table table-bordered" width="100%" cellspacing="0">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.PaymentTermTitle)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PaymentTermAmount)
-                </th>
+    <div class="table-responsive">
+        <table id="myTable" class="table table-bordered" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PaymentTermTitle)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PaymentTermAmount)
+                    </th>
 
-                <th>
-                    @Html.DisplayNameFor(model => model.PaymentTermDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Deliverable)
-                </th>
-               
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in (List<PaymentTerm>)ViewBag.PaymentTerm)
-            {
-                Deliverable pp = (Deliverable)ViewBag.Deliverable;
+                    <th>
+                        @Html.DisplayNameFor(model => model.PaymentTermDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Deliverable)
+                    </th>
 
-                if (item.DeliverableId == @pp.DeliverableId)
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in (List<PaymentTerm>)ViewBag.PaymentTerm)
                 {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PaymentTermTitle)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PaymentTermAmount)
-                </td>
+                    Deliverable pp = (Deliverable)ViewBag.Deliverable;
+
+                    if (item.DeliverableId == @pp.DeliverableId)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PaymentTermTitle)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PaymentTermAmount)
+                            </td>
 
 
-                <td>
-                    @item.PaymentTermDate.ToString("d")
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Deliverable.DeliverableName)
-                </td>
+                            <td>
+                                @item.PaymentTermDate.ToString("d")
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Deliverable.DeliverableName)
+                            </td>
 
-                <td>
-                    <a class="text-success" href="/PaymentTerm/EditPaymentTerm?PaymentTermId=@item.PaymentTermId"><i class="fa-regular fa-pen-to-square"></i></a> |
-                    
-                    <a class="text-danger" href="/PaymentTerm/DeletePaymentTerm?PaymentTermId=@item.PaymentTermId"><i class="fa-solid fa-trash"></i></a>
-                </td>
-            </tr>
+                            <td>
+                                <a class="text-success" href="/PaymentTerm/EditPaymentTerm?PaymentTermId=@item.PaymentTermId"><i class="fa-regular fa-pen-to-square"></i></a> |
+
+                                <a class="text-danger" href="/PaymentTerm/DeletePaymentTerm?PaymentTermId=@item.PaymentTermId"><i class="fa-solid fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    }
                 }
-            }
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 </div>
 @section scripts{
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jq-3.6.0/dt-1.12.1/b-2.2.3/fc-4.1.0/sc-2.0.6/sb-1.3.3/sp-2.0.1/sl-1.4.0/datatables.min.css" />
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jq-3.6.0/dt-1.12.1/b-2.2.3/fc-4.1.0/sc-2.0.6/sb-1.3.3/sp-2.0.1/sl-1.4.0/datatables.min.js"></script>
     <script>
-            $(document).ready(function () {
-                $('#myTable').DataTable();
-            });
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
     </script>
 
 
